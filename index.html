@@ -4,6 +4,9 @@
 		Nuclear Vis
 	</title>
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="http://colorbrewer2.org/export/colorbrewer.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 </header>
 <body>
 	<div class="text-center">
@@ -18,12 +21,15 @@
 			NuclearVis is a visualization dashboard made up of multiple types of visualizations which aim to illustrate the growth and danger of increasing nuclear power throughout history into the modern day.
 		</p>
 	</div>
-	<div class="flex"></div> 
-		<div class="border-2 border-black w-1/2"> 
+	<div class="pt-10 h-screen">
+		<div id="linechart" class="box-border border-4 border-red-400 h-1/2"> 
+		</div>
+		<div class="box-border border-4 border-green-400">
 
 		</div>
-		<div class="border-2 w-1/2"> 
+		<div class="box-border border-4 border-blue-400"> 
+
 		</div>
 	</div>
-
+	<script src="./linechart.js"></script>
 </body>
