@@ -22,7 +22,7 @@
 		</p>
 	</div>
 	<div class="pt-10 h-screen">
-		<div id="linechart" class="box-border border-4 border-red-400 h-1/2"> 
+		<div id="linechart" class="box-border border-4 border-red-400 h-2/3">
 		</div>
 		<div class="box-border border-4 border-green-400">
 
@@ -33,3 +33,27 @@
 	</div>
 	<script src="./linechart.js"></script>
 </body>
+<style>
+
+	.axis--x path {
+	  display: none;
+	}
+	
+	.line {
+	  fill: none;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
+
+	.line{
+		stroke-dasharray: 2500;
+		stroke-dashoffset: 2500;
+		animation: dash 3s linear forwards;
+	}
+
+	@keyframes dash {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+</style>
