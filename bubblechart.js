@@ -19,7 +19,7 @@ var sliderTime = d3
     .tickValues(dataTime)
     .default(new Date(1977, 10, 3))
     .on('onchange', val => {
-        d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
+        gTime.select('.timeLabel').text(d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
         createBubbleChart(yearIndex)
         updatePictograph(yearIndex, currentCountry)
@@ -34,8 +34,15 @@ var gTime = d3
     .attr('transform', 'translate(50,30)');
 
 gTime.call(sliderTime);
+gTime.append("text")
+    .attr("x", (canvasWidth - 100) /2)
+    .attr("y", canvasHeight + 60)
+    .attr("text-anchor", "middle")
+    .attr("font-weight", 600)
+    .attr("font-size", "20px")
+    .attr("class", "timeLabel")
 
-d3.select('p#value-time').text(d3.timeFormat('%Y')(sliderTime.value()));
+d3.select('.timeLabel').text(d3.timeFormat('%Y')(sliderTime.value()));
 
 var z = d3.scaleOrdinal(d3.schemeCategory10);
 
