@@ -6,6 +6,9 @@ var dataTime = d3.range(0, 76).map(function(d) {
     return new Date(1945 + d, 10, 3);
 });
 
+var currentCountry = "US"
+var max = 39000
+
 var sliderTime = d3
     .sliderBottom()
     .min(d3.min(dataTime))
@@ -19,6 +22,7 @@ var sliderTime = d3
         d3.select('p#value-time').text(d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
         createBubbleChart(yearIndex)
+        updatePictograph(yearIndex, currentCountry)
 });
 
 var gTime = d3
@@ -53,12 +57,14 @@ function createBubbleChart(i) {
             return d.Year == i
         })
 
+        index = i
+
         console.log(data)
         console.log("width: " + width)
         console.log("height: " + height)
 
         const bubble = data => d3.pack()
-            .size([width, height * 1.5])
+            .size([width / 2, height * 1.5])
             .padding(3)(d3.hierarchy({ children: data }).sum(d => +d.Number));
         
         const root = bubble(data)
@@ -72,6 +78,16 @@ function createBubbleChart(i) {
         const circle = node.append('circle')
             .attr('r', d => d.r)
             .style('fill', d => z(d.data.Country))
+            .on("click", function(event, d) {
+                currentCountry = d.data.Country;
+                updatePictograph(index, currentCountry)
+            })
+            .on("mouseon", function(event, d) { 
+                updatePictograph(index, d.data.Country)
+            })
+            .on("mouseout", function(d){ 
+                updatePictograph(index, currentCountry)
+            })
 
         const label = node.append('text')
             .attr('dy', 2)
@@ -86,4 +102,95 @@ function createBubbleChart(i) {
     })
 }
 
+function createPictograph(i, c) {
+    d3.csv('warheads.csv', function(d) {
+        return d;
+    }).then(function(data) { 
+
+        data = data.filter(function(d) { 
+            console.log(c)
+            return d.Year == i && d.Country === c
+        })
+
+        var percentNumber = data[0].Number/max * 1000
+        console.log(percentNumber)
+        console.log(data)
+
+        var fontFamily = "helvetica";
+        var twitterFill = "#4D908E";
+        var twitterFillActive = "#adf7b6";
+        
+        const width = document.getElementById("pictogram").clientWidth
+        const height = document.getElementById("pictogram").clientHeight;
+
+        //create an svg with width and height
+        var svg = d3.select('#pictogram')
+            .append('svg')
+            .attr("width", width)
+            .attr("height", height)
+
+        //10 rows and 10 columns 
+        var numRows = 40;
+        var numCols = 20;
+
+        //x and y axis scales
+        var y = d3.scaleBand()
+            .range([0,height - 30])
+            .domain(d3.range(numRows));
+
+        var x = d3.scaleBand()
+            .range([0, width - 30])
+            .domain(d3.range(numCols));
+
+        //the data is just an array of numbers for each cell in the grid
+        var data = d3.range(numCols*numRows);
+        console.log(data)
+
+        //container to hold the grid
+        var container = svg.append("g")
+            .attr("transform", "translate(30,30)")
+            .attr("class", "container")
+            .attr("width", width - 60)
+            .attr("height", height - 60)
+        
+
+        container.selectAll("circle").remove()
+                .data(data)
+                .enter().append("circle")
+                .attr("id", function(d){return "id"+d;})
+                .attr('cx', function(d){return x(d%numCols);})
+                .attr('cy', function(d){return y(Math.floor(d/numCols));})
+                .attr('r', 12)
+                .attr('fill', function(d){return d < percentNumber ? twitterFillActive : twitterFill;})
+                .style('stroke', 'black');
+    })
+}
+
+function updatePictograph(i, c) {
+    d3.csv('warheads.csv', function(d) {
+        return d;
+    }).then(function(data) { 
+
+        data = data.filter(function(d) { 
+            console.log(c)
+            return d.Year == i && d.Country === c
+        })
+
+        var twitterFill = "#4D908E";
+        var twitterFillActive = "#adf7b6";
+
+        var percentNumber = data[0].Number/max * 1000
+
+        console.log(percentNumber)
+
+        var svg = d3.select('#pictogram')
+
+        var container = svg.select('.container')
+
+        container.selectAll("circle")
+            .attr('fill', function(d){return d < percentNumber ? twitterFillActive : twitterFill;})
+    })
+}
+
+createPictograph(1977, currentCountry)
 createBubbleChart(1977);
