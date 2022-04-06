@@ -40,7 +40,7 @@ d3.csv("warheads2.csv", function(d) {
 	    return {
 	      id: id,
 	      values: data.map(function(d) {
-	        return {date: d.Date, warheads: parseInt(d[id], 10)};
+	        return {date: d.Date, warheads: d[id]};
 	      }),
 	    };
 	  });
@@ -77,7 +77,6 @@ d3.csv("warheads2.csv", function(d) {
 		  .attr("width", width - margin.right);
 
 	  function hover(elem) {
-      console.log(elem)
 		  var attrs = elem.srcElement.attributes;
 		  let id = attrs['data-id'].value;
 		  let path = city.select('#' + id);
@@ -99,7 +98,6 @@ d3.csv("warheads2.csv", function(d) {
       .style("opacity", "0");
       
     var lines = document.getElementsByClassName('line');
-    console.log(cities)
 
     var mousePerLine = mouseG.selectAll('mouse-per-line')
       .data(cities)
@@ -171,7 +169,7 @@ d3.csv("warheads2.csv", function(d) {
               }
                 
               d3.select(this).select('text')
-                .text(y.invert(pos.y).toFixed(2));
+                .text(parseInt(y.invert(pos.y).toFixed(2), 10));
                 
               return "translate(" + mouse[0] + "," + pos.y +")";
             

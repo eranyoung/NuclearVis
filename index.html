@@ -5,8 +5,9 @@
 	</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://d3js.org/d3.v7.min.js"></script>
-	<script src="http://colorbrewer2.org/export/colorbrewer.js"></script>
+	<script src="https://colorbrewer2.org/export/colorbrewer.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+	<script src="https://unpkg.com/d3-simple-slider"></script>
 </header>
 <body>
 	<div class="text-center">
@@ -24,13 +25,12 @@
 	<div class="pt-10 h-screen">
 		<div id="linechart" class="box-border border-4 border-red-400 h-2/3">
 		</div>
-		<div class="box-border border-4 border-green-400">
-
+		<div id="timeline" class="box-border border-4 border-green-400">
 		</div>
-		<div class="box-border border-4 border-blue-400"> 
-
+		<div id="bubblechart" class="box-border border-4 border-blue-400 h-screen"> 
 		</div>
 	</div>
+	<script src="./bubblechart.js"></script>
 	<script src="./linechart.js"></script>
 </body>
 <style>
