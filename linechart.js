@@ -110,7 +110,9 @@ d3.csv("warheads2.csv", function(d) {
       .style("stroke", function(d) {
         return z(d.id);
       })
-      .style("fill", "none")
+      .style("fill", function(d) {
+        return z(d.id);
+      })
       .style("stroke-width", "1px")
       .style("opacity", "0");
 
@@ -152,6 +154,8 @@ d3.csv("warheads2.csv", function(d) {
               var xDate = x.invert(mouse[0]),
                   bisect = d3.bisector(function(d) { return d.date; }).right;
                   idx = bisect(d.values, xDate);
+
+            console.log("xDate: " + xDate)
 
               var beginning = 0,
                   end = lines[i].getTotalLength(),

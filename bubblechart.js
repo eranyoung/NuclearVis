@@ -118,8 +118,6 @@ function createPictograph(i, c) {
             console.log(c)
             return d.Year == i && d.Country === c
         })
-
-        var percentNumber = data[0].Number/max * 1000
         console.log(percentNumber)
         console.log(data)
 
@@ -137,8 +135,11 @@ function createPictograph(i, c) {
             .attr("height", height)
 
         //10 rows and 10 columns 
-        var numRows = 40;
-        var numCols = 20;
+        var numRows = width / (width / 10);
+        var numCols = height/  (height/ 10);
+
+        var percentNumber = (data[0].Number / max) * 100
+        console.log("percent number: " + percentNumber)
 
         //x and y axis scales
         var y = d3.scaleBand()
@@ -186,7 +187,7 @@ function updatePictograph(i, c) {
         var twitterFill = "#4D908E";
         var twitterFillActive = "#adf7b6";
 
-        var percentNumber = data[0].Number/max * 1000
+        var percentNumber = data[0].Number/max * 100
 
         console.log(percentNumber)
 
