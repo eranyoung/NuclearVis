@@ -1,6 +1,55 @@
 var canvasWidth = document.getElementById("linechart").clientWidth;
 var canvasHeight = document.getElementById("linechart").clientHeight;
 
+function emptyMethod(year) { 
+  console.log("SDLFKJLFK");
+  d3.select(".mouse-line")
+    .style("opacity", "1")
+    .attr("d", function() {
+      var d = "M" + x(+year) + "," + canvasHeight;
+      d += " " + x(+year) + "," + 0;
+      return d;
+    });
+  d3.selectAll(".mouse-per-line circle")
+    .style("opacity", "1");
+  d3.selectAll(".mouse-per-line text")
+    .style("opacity", "1");
+
+  d3.selectAll(".mouse-per-line")
+  .attr("transform", function(d, i) {
+      var lines = document.getElementsByClassName('line');    
+      if(i < 9) {
+
+        var beginning = 0,
+            end = lines[i].getTotalLength(),
+            target = null;
+        
+        while (lines[i]){
+          target = Math.floor((beginning + end) / 2);
+          pos = lines[i].getPointAtLength(target);
+          if ((target === end || target === beginning) && pos.x !== x(+year)) {
+              break;
+          }
+          if (pos.x > x(+year)) end = target;
+          else if (pos.x < x(+year)) beginning = target;
+          else break; //position found
+        }
+        
+        console.log("target: " + target);
+        console.log("pos: " + pos);
+          
+        d3.select(this).select('text')
+          .text(parseInt(y.invert(pos.y).toFixed(2), 10));
+          
+        return "translate(" + x(+year) + "," + pos.y +")";
+
+    }
+    
+  })
+
+  console.log("YEAR: " + x(+year))
+}
+
 var parseTime = d3.timeParse("%d-%b-%y");
     bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
@@ -58,7 +107,7 @@ d3.csv("warheads2.csv", function(d) {
 	      .attr("class", "axis axis--x")
 	      .attr("id", 'x_axis')
 	      .attr("transform", "translate(0," + height + ")")
-	      .call(d3.axisBottom(x));
+	      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.format("d")))
 
 	  g.append("g")
 	      .attr("class", "axis axis--y")
@@ -97,8 +146,7 @@ d3.csv("warheads2.csv", function(d) {
       .style("stroke-width", "1px")
       .style("opacity", "0");
       
-    var lines = document.getElementsByClassName('line');
-
+    var lines = document.getElementsByClassName('line');    
     var mousePerLine = mouseG.selectAll('mouse-per-line')
       .data(cities)
       .enter()
@@ -124,14 +172,6 @@ d3.csv("warheads2.csv", function(d) {
       .attr('height', canvasHeight)
       .attr('fill', 'none')
       .attr('pointer-events', 'all')
-      .on('mouseout', function() { // on mouse out hide line, circles and text
-        d3.select(".mouse-line")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line text")
-          .style("opacity", "0");
-      })
       .on('mouseover', function() { // on mouse in show line, circles and text
         d3.select(".mouse-line")
           .style("opacity", "1");
@@ -146,36 +186,39 @@ d3.csv("warheads2.csv", function(d) {
           .attr("d", function() {
             var d = "M" + mouse[0] + "," + canvasHeight;
             d += " " + mouse[0] + "," + 0;
+            console.log("mouselined: " + d)
             return d;
           });
 
         d3.selectAll(".mouse-per-line")
           .attr("transform", function(d, i) {
-              var xDate = x.invert(mouse[0]),
-                  bisect = d3.bisector(function(d) { return d.date; }).right;
-                  idx = bisect(d.values, xDate);
 
-            console.log("xDate: " + xDate)
+              if(i < 9) {
 
-              var beginning = 0,
-                  end = lines[i].getTotalLength(),
-                  target = null;
-
-              while (lines[i]){
-                target = Math.floor((beginning + end) / 2);
-                pos = lines[i].getPointAtLength(target);
-                if ((target === end || target === beginning) && pos.x !== mouse[0]) {
-                    break;
+                var beginning = 0,
+                    end = lines[i].getTotalLength(),
+                    target = null;
+                
+                while (lines[i]){
+                  target = Math.floor((beginning + end) / 2);
+                  pos = lines[i].getPointAtLength(target);
+                  if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                      break;
+                  }
+                  if (pos.x > mouse[0]) end = target;
+                  else if (pos.x < mouse[0]) beginning = target;
+                  else break; //position found
                 }
-                if (pos.x > mouse[0]) end = target;
-                else if (pos.x < mouse[0]) beginning = target;
-                else break; //position found
-              }
                 
-              d3.select(this).select('text')
-                .text(parseInt(y.invert(pos.y).toFixed(2), 10));
-                
-              return "translate(" + mouse[0] + "," + pos.y +")";
+                console.log("target: " + target);
+                console.log("pos: " + pos);
+                  
+                d3.select(this).select('text')
+                  .text(parseInt(y.invert(pos.y).toFixed(2), 10));
+                  
+                return "translate(" + mouse[0] + "," + pos.y +")";
+
+            }
             
           })})
           
@@ -203,11 +246,11 @@ d3.csv("warheads2.csv", function(d) {
         path.attr("visibility", "hidden")
       } 
 	  }
-
+    /*
 	  const xAxis = (g, x) => g
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.format("d")))
-
+    /*
 	  function zoomed(event) {
       const xz = event.transform.rescaleX(x);
       city.selectAll('.line').attr('d', function(d) { return makeLine(xz)(d.values); })
@@ -223,9 +266,7 @@ d3.csv("warheads2.csv", function(d) {
 	  svg.call(zoom)
 	    .transition()
 	      .duration(100)
-	      .call(zoom.scaleTo, 1, [x(Date.UTC(2012, 1, 1)), 0]);
-
-    const transitionPath = d3.transition().ease(d3.easeSin).duration(2500);
+	      .call(zoom.scaleTo, 1, [x(Date.UTC(2012, 1, 1)), 0]);*/ 
 
 	  city.append("path")
 	      .attr("class", "line")

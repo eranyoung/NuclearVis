@@ -1,4 +1,4 @@
- // Time
+// Time
 var canvasWidth = document.getElementById("timeline").clientWidth;
 var canvasHeight = document.getElementById("timeline").clientHeight;
 
@@ -23,6 +23,8 @@ var sliderTime = d3
         var yearIndex = d3.timeFormat('%Y')(val)
         createBubbleChart(yearIndex)
         updatePictograph(yearIndex, currentCountry)
+        console.log("VAL: " +  yearIndex)
+        emptyMethod(yearIndex)
 });
 
 var gTime = d3
@@ -118,10 +120,7 @@ function createPictograph(i, c) {
             console.log(c)
             return d.Year == i && d.Country === c
         })
-        console.log(percentNumber)
-        console.log(data)
 
-        var fontFamily = "helvetica";
         var twitterFill = "#4D908E";
         var twitterFillActive = "#adf7b6";
         
