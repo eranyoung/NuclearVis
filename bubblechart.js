@@ -122,7 +122,7 @@ function createPictograph(i, c) {
             return d.Year == i && d.Country === c
         })
 
-        var twitterFill = "#4D908E";
+        var twitterFill = "white";
         var twitterFillActive = "#adf7b6";
         
         const width = document.getElementById("pictogram").clientWidth
@@ -170,7 +170,7 @@ function createPictograph(i, c) {
                 .attr('cy', function(d){return y(Math.floor(d/numCols));})
                 .attr('r', 12)
                 .attr('fill', function(d){return d < percentNumber ? twitterFillActive : twitterFill;})
-                .style('stroke', 'black');
+                .style('stroke', function(d){return d < percentNumber ? "black" : "white";});
     })
 }
 
@@ -184,7 +184,7 @@ function updatePictograph(i, c) {
             return d.Year == i && d.Country === c
         })
 
-        var twitterFill = "#4D908E";
+        var twitterFill = "white";
         var twitterFillActive = "#adf7b6";
 
         var percentNumber = data[0].Number/max * 100
