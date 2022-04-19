@@ -14,35 +14,36 @@ var sliderTime = d3
     .min(d3.min(dataTime))
     .max(d3.max(dataTime))
     .step(1000 * 60 * 60 * 24 * 365)
-    .width(canvasWidth - 100)
+    .width(canvasWidth - 150)
     .tickFormat(d3.timeFormat('%Y'))
     .tickValues(dataTime)
-    .default(new Date(1977, 10, 3))
+    .default(new Date(1983, 10, 3))
     .on('onchange', val => {
         gTime.select('.timeLabel').text(d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
         createBubbleChart(yearIndex)
         updatePictograph(yearIndex, currentCountry)
-        console.log("VAL: " +  yearIndex)
-        emptyMethod(yearIndex)
+        drawLineToolTip(yearIndex)
 });
+
 
 var gTime = d3
     .select('#timeline')
     .append('svg')
     .attr('width', canvasWidth)
-    .attr('height', 100)
+    .attr('height', canvasHeight)
     .append('g')
     .attr('transform', 'translate(50,30)');
 
-gTime.call(sliderTime);
 gTime.append("text")
-    .attr("x", (canvasWidth - 100) /2)
-    .attr("y", canvasHeight + 60)
+    .attr("x", (canvasWidth - 125) /2)
+    .attr("y", 80)
     .attr("text-anchor", "middle")
-    .attr("font-weight", 600)
-    .attr("font-size", "20px")
+    .attr("font-weight", 800)
+    .attr("font-size", "40px")
     .attr("class", "timeLabel")
+
+gTime.call(sliderTime);
 
 d3.select('.timeLabel').text(d3.timeFormat('%Y')(sliderTime.value()));
 

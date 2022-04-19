@@ -1,8 +1,7 @@
 var canvasWidth = document.getElementById("linechart").clientWidth;
 var canvasHeight = document.getElementById("linechart").clientHeight;
 
-function emptyMethod(year) { 
-  console.log("SDLFKJLFK");
+function drawLineToolTip(year) { 
   d3.select(".mouse-line")
     .style("opacity", "1")
     .attr("d", function() {
@@ -294,4 +293,6 @@ d3.csv("warheads2.csv", function(d) {
 	      .text(function(d) { return d.id; })
 		  .on("mouseout", exit)
 		  .on("click", click)
+
+      drawLineToolTip(1983)
 })
