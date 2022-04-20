@@ -33,20 +33,12 @@ function drawLineToolTip(year) {
           else if (pos.x < x(+year)) beginning = target;
           else break; //position found
         }
-        
-        console.log("target: " + target);
-        console.log("pos: " + pos);
-          
-        d3.select(this).select('text')
-          .text(parseInt(y.invert(pos.y).toFixed(2), 10));
           
         return "translate(" + x(+year) + "," + pos.y +")";
 
     }
     
   })
-
-  console.log("YEAR: " + x(+year))
 }
 
 var parseTime = d3.timeParse("%d-%b-%y");
@@ -55,7 +47,7 @@ var parseTime = d3.timeParse("%d-%b-%y");
 var svg = d3.select("#linechart").append('svg')
     .attr("width", canvasWidth)
     .attr("height", canvasHeight),
-    margin = {top: 20, right: 50, bottom: 30, left: 50},
+    margin = {top: 20, right: 50, bottom: 5, left: 50},
     width = svg.attr("width") - margin.left - margin.right,
     height = svg.attr("height") - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -84,7 +76,7 @@ d3.csv("warheads2.csv", function(d) {
   	      for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
 	  }
 
-	  var cities = data.columns.slice(1).map(function(id) {
+	  var countries = data.columns.slice(1).map(function(id) {
 	    return {
 	      id: id,
 	      values: data.map(function(d) {
@@ -95,18 +87,11 @@ d3.csv("warheads2.csv", function(d) {
 
 	  x.domain(d3.extent(data, function(d) { return d.Date; }));
 
-	  y.domain([
-	    d3.min(cities, function(c) { return d3.min(c.values, function(d) { return +d.warheads; }); }),
-	    d3.max(cities, function(c) { return d3.max(c.values, function(d) { return +d.warheads; }); })
-	  ]);
+	  y.domain([0, 40159]);
 
-	  z.domain(cities.map(function(c) { return c.id; }));
+	  z.domain(countries.map(function(c) { return c.id; }));
 
-	  const x_axis = g.append("g")
-	      .attr("class", "axis axis--x")
-	      .attr("id", 'x_axis')
-	      .attr("transform", "translate(0," + height + ")")
-	      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.format("d")))
+	  
 
 	  g.append("g")
 	      .attr("class", "axis axis--y")
@@ -119,10 +104,11 @@ d3.csv("warheads2.csv", function(d) {
 	      .text("Warheads");
 
 	  var city = g.selectAll(".city")
-	    .data(cities)
+	    .data(countries)
 	    .enter().append("svg")
 	      .attr("class", "city")
-		  .attr("width", width - margin.right);
+		  .attr("width", width - margin.right)
+      .attr("height", height)
 
 	  function hover(elem) {
 		  var attrs = elem.srcElement.attributes;
@@ -147,13 +133,13 @@ d3.csv("warheads2.csv", function(d) {
       
     var lines = document.getElementsByClassName('line');    
     var mousePerLine = mouseG.selectAll('mouse-per-line')
-      .data(cities)
+      .data(countries)
       .enter()
       .append("g")
       .attr("class", "mouse-per-line");
 
     mousePerLine.append("circle")
-      .attr("r", 7)
+      .attr("r", 4)
       .style("stroke", function(d) {
         return z(d.id);
       })
@@ -185,7 +171,6 @@ d3.csv("warheads2.csv", function(d) {
           .attr("d", function() {
             var d = "M" + mouse[0] + "," + canvasHeight;
             d += " " + mouse[0] + "," + 0;
-            console.log("mouselined: " + d)
             return d;
           });
 
@@ -208,12 +193,8 @@ d3.csv("warheads2.csv", function(d) {
                   else if (pos.x < mouse[0]) beginning = target;
                   else break; //position found
                 }
-                
-                console.log("target: " + target);
-                console.log("pos: " + pos);
                   
-                d3.select(this).select('text')
-                  .text(parseInt(y.invert(pos.y).toFixed(2), 10));
+                
                   
                 return "translate(" + mouse[0] + "," + pos.y +")";
 
@@ -279,7 +260,7 @@ d3.csv("warheads2.csv", function(d) {
         .on("mouseover", hover)
 
 	  svg.selectAll(".label")
-		  .data(cities)
+		  .data(countries)
 		  .enter()
           .append("text")
 	      .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
@@ -294,5 +275,5 @@ d3.csv("warheads2.csv", function(d) {
 		  .on("mouseout", exit)
 		  .on("click", click)
 
-      drawLineToolTip(1983)
+      drawLineToolTip(1945)
 })

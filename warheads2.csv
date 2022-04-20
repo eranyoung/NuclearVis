@@ -1,77 +1,77 @@
-Date,USA,Russia,UK,France,China,Israel,India,Pakistan,North Korea
-1945,2,0,0,0,0,0,0,0,0
-1946,9,0,0,0,0,0,0,0,0
-1947,13,0,0,0,0,0,0,0,0
-1948,50,0,0,0,0,0,0,0,0
-1949,170,1,0,0,0,0,0,0,0
-1950,299,5,0,0,0,0,0,0,0
-1951,438,25,0,0,0,0,0,0,0
-1952,841,50,0,0,0,0,0,0,0
-1953,1169,120,1,0,0,0,0,0,0
-1954,1703,150,5,0,0,0,0,0,0
-1955,2422,200,10,0,0,0,0,0,0
-1956,3692,426,50,0,0,0,0,0,0
-1957,5543,660,58,0,0,0,0,0,0
-1958,7345,863,60,0,0,0,0,0,0
-1959,12298,1048,78,0,0,0,0,0,0
-1960,18638,1627,105,0,0,0,0,0,0
-1961,22229,2492,155,0,0,0,0,0,0
-1962,25540,3346,211,0,0,0,0,0,0
-1963,28133,4259,256,0,0,0,0,0,0
-1964,29463,5242,271,4,1,0,0,0,0
-1965,31139,6144,271,32,5,0,0,0,0
-1966,31175,7091,281,36,20,0,0,0,0
-1967,31255,8400,355,36,25,2,0,0,0
-1968,29561,9490,317,36,35,4,0,0,0
-1969,27552,10671,306,36,50,6,0,0,0
-1970,26008,11736,375,36,75,8,0,0,0
-1971,25830,13279,412,45,100,11,0,0,0
-1972,26516,14600,423,70,130,13,0,0,0
-1973,27835,15878,500,116,150,15,0,0,0
-1974,28537,17286,500,145,170,17,0,0,0
-1975,27519,19235,500,188,180,20,0,0,0
-1976,25914,22165,500,212,180,22,0,0,0
-1977,25542,24281,500,228,180,24,0,0,0
-1978,24418,26169,500,235,190,26,0,0,0
-1979,24138,28258,500,235,195,29,0,0,0
-1980,24104,30665,500,250,205,31,0,0,0
-1981,23208,32146,500,274,210,33,0,0,0
-1982,22886,33486,385,274,216,35,0,0,0
-1983,23305,35130,380,279,218,38,0,0,0
-1984,23459,36825,350,280,220,40,0,0,0
-1985,23368,38582,350,360,222,42,0,0,0
-1986,23317,40159,350,355,224,44,0,0,0
-1987,23575,38107,350,420,226,47,0,0,0
-1988,23205,36538,350,410,228,49,0,0,0
-1989,22217,35078,350,410,230,51,0,0,0
-1990,21392,32980,350,505,232,53,0,0,0
-1991,19008,29154,350,540,234,56,0,0,0
-1992,13708,26734,250,540,234,58,0,0,0
-1993,11511,24403,250,525,234,60,0,0,0
-1994,10979,21339,250,510,234,62,0,0,0
-1995,10904,18179,234,500,234,63,0,0,0
-1996,11011,15942,203,450,234,64,0,0,0
-1997,10903,15542,203,450,232,66,0,0,0
-1998,10732,14368,240,450,232,68,3,2,0
-1999,10685,13188,240,450,232,70,8,8,0
-2000,10577,12188,280,470,232,72,13,14,0
-2001,10526,11152,280,350,235,74,18,20,0
-2002,10457,10114,280,350,235,76,23,26,0
-2003,10027,9076,280,350,235,78,28,32,0
-2004,8570,8038,280,350,235,80,33,38,0
-2005,8360,7000,280,350,235,80,38,44,0
-2006,7853,6643,225,350,235,80,43,50,0
-2007,5709,6286,225,350,235,80,50,60,0
-2008,5273,5929,225,300,235,80,60,70,0
-2009,5113,5527,225,300,240,80,70,80,0
-2010,5066,5215,225,300,240,80,80,90,0
-2011,4897,4858,225,300,240,80,90,100,0
-2012,4881,4750,225,300,240,80,100,110,0
-2013,4804,4650,225,300,250,80,110,115,1
-2014,4717,4600,220,300,250,80,100,120,2
-2015,4571,4500,220,300,260,80,110,125,3
-2016,4018,4490,215,300,260,80,120,130,4
-2017,4000,4300,215,300,270,80,130,140,5
-2018,4000,4350,215,300,280,80,135,145,10
-2019,3800,4490,215,300,290,85,140,150,15
-2020,3800,4310,195,290,320,90,150,160,35
+Date,USA,Russia,UK,France,China,Israel,India,Pakistan,North Korea,Descriptions
+1945,2,0,0,0,0,0,0,0,0,"The United States conducts the world’s first atomic bomb test, called ‘Trinity’, at Alamogordo, New Mexico. The United States drops atomic bombs on Hiroshima and Nagasaki."
+1946,9,0,0,0,0,0,0,0,0,
+1947,13,0,0,0,0,0,0,0,0,
+1948,50,0,0,0,0,0,0,0,0,
+1949,170,1,0,0,0,0,0,0,0,"The Soviet Union tests its first atomic bomb.  The North Atlantic Treaty Organisation (NATO) is formed."
+1950,299,5,0,0,0,0,0,0,0,"The World Peace Council publishes the Stockholm Appeal calling for an absolute ban on nuclear weapons."
+1951,438,25,0,0,0,0,0,0,0,
+1952,841,50,0,0,0,0,0,0,0,"First British atomic bomb test off the coast of Australia."
+1953,1169,120,1,0,0,0,0,0,0,
+1954,1703,150,5,0,0,0,0,0,0,"The world’s first nuclear-powered submarine, the USS Nautilus, is launched. First US hydrogen bomb test. A Japanese fishing boat, the Daigo Fukuryu Maru, is exposed to radioactive fallout from an American hydrogen bomb test at Bikini Atoll in the Pacific; one crew member later dies as a result of exposure to radiation. "
+1955,2422,200,10,0,0,0,0,0,0,"Warsaw Treaty Organisation (Warsaw Pact) is formed."
+1956,3692,426,50,0,0,0,0,0,0,"The Soviet Union announces it has a hydrogen bomb."
+1957,5543,660,58,0,0,0,0,0,0,"First British hydrogen bomb test in Australia. The United States conducts its first underground nuclear test. Major fire at the Windscale (now Sellafield) nuclear site in Cumbria results in radioactive discharges."
+1958,7345,863,60,0,0,0,0,0,0,"CND is formed. US supplies Thor atomic missiles to the UK. The first march to Aldermaston (where Britain’s nuclear bombs are made) takes place."
+1959,12298,1048,78,0,0,0,0,0,0,
+1960,18638,1627,105,0,0,0,0,0,0,"France conducts its first nuclear test in Algeria."
+1961,22229,2492,155,0,0,0,0,0,0,"The first US nuclear submarine arrives at Holy Loch, in Scotland."
+1962,25540,3346,211,0,0,0,0,0,0,"100,000 attend rally at the end of an Aldermaston march. Cuban missile crisis – a month-long confrontation between the US and Soviet Union, which many believe to be the closes the world has come to a nuclear war. UK government announces purchase of Polaris missile from the US. "
+1963,28133,4259,256,0,0,0,0,0,0,"Partial Test Ban Treaty – which prohibits nuclear tests anywhere but underground – enters into force."
+1964,29463,5242,271,4,1,0,0,0,0,"China conducts its first atomic bomb test."
+1965,31139,6144,271,32,5,0,0,0,0,
+1966,31175,7091,281,36,20,0,0,0,0,
+1967,31255,8400,355,36,25,2,0,0,0,"Treaty of Tlatelolco is signed, prohibiting nuclear weapons in Latin America and the Caribbean. The Outer Space Treaty enters into force, which bans putting nuclear weapons in space."
+1968,29561,9490,317,36,35,4,0,0,0,"The nuclear Non-Proliferation Treaty is signed. Nuclear-armed states agree to work towards disarmament, while non-nuclear states agree not to acquire nuclear weapons."
+1969,27552,10671,306,36,50,6,0,0,0,
+1970,26008,11736,375,36,75,8,0,0,0,"The nuclear Non-Proliferation Treaty  enters into force."
+1971,25830,13279,412,45,100,11,0,0,0,
+1972,26516,14600,423,70,130,13,0,0,0,"The US and the Soviet Union conclude the Anti-Ballistic Missile (ABM) Treaty and the Strategic Arms Limitation Treaty (SALT I).   Labour Party conference votes for unilateral nuclear disarmament."
+1973,27835,15878,500,116,150,15,0,0,0,The United States and the Soviet Union sign the Agreement on the Prevention of Nuclear War."
+1974,28537,17286,500,145,170,17,0,0,0,"India conducts its first nuclear tests underground."
+1975,27519,19235,500,188,180,20,0,0,0,
+1976,25914,22165,500,212,180,22,0,0,0,
+1977,25542,24281,500,228,180,24,0,0,0,"Liberal Party conference votes against the development of nuclear power."
+1978,24418,26169,500,235,190,26,0,0,0,"The United Nations General Assembly holds its first special session on disarmament."
+1979,24138,28258,500,235,195,29,0,0,0,"A severe accident occurs at the Three Mile Island nuclear power plant in Pennsylvania, the most significant in the US’ history. The United States and the Soviet Union sign SALT II. NATO announces that 572 US cruise and Pershing missiles will be based in Europe (including Britain)."
+1980,24104,30665,500,250,205,31,0,0,0,"The UK government announces Greenham Common in Berkshire and Molesworth in North Hamptonshire as bases for cruise missiles. It also announces its intention to develop Trident, a new nuclear weapons system. Manchester is the first local authority in the UK to declare itself a nuclear-free zone."
+1981,23208,32146,500,274,210,33,0,0,0,"The Trades Union Congress (TUC) votes in favour of unilateral nuclear disarmament. Women’s Peace Camp set up at Greenham Common. Huge anti-nuclear protests across Europe."
+1982,22886,33486,385,274,216,35,0,0,0,"250,000 protest against nuclear weapons in London, while 30,000 women surround Greenham Common. Home Office cancels civil defence exercise ‘Hard Rock’ as local authorities refuse to take part. Faslane Peace Camp is formed."
+1983,23305,35130,380,279,218,38,0,0,0,"United States President Ronald Reagan announces the Strategic Defence Initiative (SDI) programme. Nicknamed ‘Star Wars’, this was the first ever plans for a missile defence system. CND organises 14 mile human chain linking Greenham Common, Aldermaston and Burghfield. 250,000 protest against nuclear weapons in London. First cruise missiles arrives at Greenham Common."
+1984,23459,36825,350,280,220,40,0,0,0,
+1985,23368,38582,350,360,222,42,0,0,0,"The Treaty of Rarotonga is signed, declaring the South Pacific nuclear-free."
+1986,23317,40159,350,355,224,44,0,0,0,"A disastrous accident occurs at the Chernobyl nuclear power plant in Ukraine."
+1987,23575,38107,350,420,226,47,0,0,0,
+1988,23205,36538,350,410,228,49,0,0,0,
+1989,22217,35078,350,410,230,51,0,0,0,"The fall of the Berlin Wall, signifying the end of the Cold War."
+1990,21392,32980,350,505,232,53,0,0,0,"The last cruise missiles leave Britain."
+1991,19008,29154,350,540,234,56,0,0,0,"The United States and the Soviet Union sign the START I treaty (Strategic Arms Reduction Treaty) on the reduction and limitation of strategic offensive arms."
+1992,13708,26734,250,540,234,58,0,0,0,""The first Trident submarine, HMS Vanguard, is launched. South Africa announces it has dismantled its nuclear weapons."
+1993,11511,24403,250,525,234,60,0,0,0,"START II signed. The Labour Party conference votes to cancel Trident and to stop nuclear testing."
+1994,10979,21339,250,510,234,62,0,0,0,"Ukraine signs an agreement with the United States and Russia to give up all the nuclear weapons deployed in the country by the former Soviet Union. START I enters into force."
+1995,10904,18179,234,500,234,63,0,0,0,"France resumes nuclear testing in the South Pacific. The Treaty of Bangkok, making Southeast Asia a nuclear-weapon-free-zone, is signed."
+1996,11011,15942,203,450,234,64,0,0,0,"The Treaty of Pelindaba, making Africa nuclear-weapon-free, is signed. The International Court of Justice issues an advisory opinion that “the threat or use of nuclear weapons would generally be contrary to the rules of international law”. It also confirmed that the nuclear weapons states had a duty to work towards nuclear disarmament under Article 6 of the Non-Proliferation Treaty.  The United Nations General Assembly adopts the Comprehensive Test Ban Treaty, an agreement to ban all nuclear weapon testing."
+1997,10903,15542,203,450,232,66,0,0,0,
+1998,10732,14368,240,450,232,68,3,2,0,"Both India and Pakistan carry out underground nuclear tests."
+1999,10685,13188,240,450,232,70,8,8,0,"The United States Senate rejects the Comprehensive Test Ban Treaty, drawing widespread international condemnation."
+2000,10577,12188,280,470,232,72,13,14,0,"The Duma, Russia’s parliament, ratifies the Comprehensive Test Ban Treaty. After last-minute negotiations at the NPT Review Conference, the world’s five main nuclear powers pledge to make “an unequivocal undertaking… to accomplish the total elimination of their nuclear arsenals”. United States President Bill Clinton and Russian President Vladimir Putin reach an Early Warning Agreement during the Moscow Summit."
+2001,10526,11152,280,350,235,74,18,20,0,
+2002,10457,10114,280,350,235,76,23,26,0,"UK Defence Minister Geoff Hoon tells Parliament that Britain could use nuclear weapons against non-nuclear weapon states. US withdraws from the Anti-Ballistic Missile Treaty."
+2003,10027,9076,280,350,235,78,28,32,0,"North Korea withdraws from the nuclear Non-Proliferation Treaty. The CIA reports that Iran is pursuing a nuclear weapons programme. Demonstrations take place across the world against an invasion of Iraq. The largest ever demonstration in British history – organised by CND, Stop the War Coalition and Muslim Association of Britain – is held in London, with over a million people present. UK is part of coalition which invades Iraq."
+2004,8570,8038,280,350,235,80,33,38,0,
+2005,8360,7000,280,350,235,80,38,44,0,
+2006,7853,6643,225,350,235,80,43,50,0,
+2007,5709,6286,225,350,235,80,50,60,0,"UK Parliament votes to begin process of replacing Trident with a new submarine-based delivery system for its nuclear weapons."
+2008,5273,5929,225,300,235,80,60,70,0,
+2009,5113,5527,225,300,240,80,70,80,0,
+2010,5066,5215,225,300,240,80,80,90,0,
+2011,4897,4858,225,300,240,80,90,100,0,
+2012,4881,4750,225,300,240,80,100,110,0,
+2013,4804,4650,225,300,250,80,110,115,1,
+2014,4717,4600,220,300,250,80,100,120,2,
+2015,4571,4500,220,300,260,80,110,125,3,"The Joint Comprehensive Plan of Action, commonly known as the Iran nuclear deal, is agreed."
+2016,4018,4490,215,300,260,80,120,130,4,"CND organises Scrap Trident demonstration in London, with 100,000 protesting against Britain’s nuclear weapons system. UK Parliament votes to build new submarines for the UK’s nuclear weapons system."
+2017,4000,4300,215,300,270,80,130,140,5,"The first treaty to ban nuclear weapons outright – the Treaty on the Prohibition of Nuclear Weapons – is adopted at the United Nations. The International Campaign to Abolish Nuclear Weapons (ICAN) – of which CND is a partner – wins the Nobel Peace Prize for its work on the Treaty on the Prohibition of Nuclear Weapons."
+2018,4000,4350,215,300,280,80,135,145,10,
+2019,3800,4490,215,300,290,85,140,150,15,
+2020,3800,4310,195,290,320,90,150,160,35,"The UK government is forced to announce it has begun work on a new nuclear warhead, following comments by US officials revealing the work had begun."
