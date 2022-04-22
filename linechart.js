@@ -76,7 +76,7 @@ d3.csv("warheads2.csv", function(d) {
   	      for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
 	  }
 
-	  var countries = data.columns.slice(1,8).map(function(id) {
+	  var countries = data.columns.slice(1,10).map(function(id) {
       return {
         id: id,
         values: data.map(function(d) {

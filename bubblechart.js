@@ -246,8 +246,8 @@ function updateNukeLabel(i, c){
             return d.Year == i && d.Country === c
         })
         
-        const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "NK"]
-        countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia", "China", "France", "United Kingdom", "Pakistan", "Israel", "North Korea"])
+        const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN", "NK"]
+        countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia", "China", "France", "United Kingdom", "Pakistan", "Israel", "India", "North Korea"])
 
         let desc = "That's about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
 
