@@ -9,42 +9,50 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 	<script src="https://unpkg.com/d3-simple-slider"></script>
 </header>
-<body class="bg-gray-300">
-	<div class="text-center">
-		<h1 class="text-4xl font-bold">Nuclear Vis</h1>
-		<h2 class="pt-2">Eran Young</h2>
-	</div>
-	<div class="text-center">
-		<br>
-		<h2 class="text-xl underline pb-5 font-semibold">Project Description</h2>
-		<p>
-			This project was inspired by the 2022 Russian invasion of Ukraine and the resulting increased threat of nuclear warfare.
-			NuclearVis is a visualization dashboard made up of multiple types of visualizations which aim to illustrate the growth and danger of increasing nuclear power throughout history into the modern day.
-		</p>
-		<a href="CS360 - Alpha Release.pdf">
-			<h2 class="text-2xl underline pt-5 font-semibold text-blue-700" >Alpha Release</h2>
-		</a>
-	</div>
-	<div class="pt-10 h-screen">
-		<div id="linechart" class="bg-gray-400 h-2/3"></div>
-		<div class="h-fit">
-			<div id="timeline" class="h-28"></div>
-			<div id="description" class="text-3xl font-semibold text-center h-1/2"></div>
-		</div>
-		<div id="pictogram" class="bg-gray-400 h-16"></div>
-		<div class="h-4"></div>
-		<div class="flex">
-			<div id="bubblechart" class="w-2/3 h-screen"> </div>
-			<div class="h-screen" style="border-left: 2px solid black"></div>
-			<div id="text-box" class="w-1/3 h-screen"> 
-				<div id="nukelabel" class="text-6xl pt-5 pl-5 font-bold">0</div>
-				<a class="text-4xl pl-5 font-semibold">Nuclear Warheads</a> 
-				<div id="desclabel" class="text-3xl pl-5 font-semibold"></div>
+<body class="bg-gray-700 bg-repeat" style="background-image: url(background.png)">
+	<div class="w-full flex justify-center">
+		<div class="pt-10 w-2/3">
+			<div class="rounded-xl border-4 border-[#622950] bg-yellow-100 h-full w-full">
+				<div class="text-center">
+					<h1 class="pt-2 text-6xl font-bold">NuclearVis</h1>
+					<h2 class="pt-2">Eran Young</h2>
+				</div>
+				<div class="text-center">
+					<br>
+					<h2 class="text-xl underline pb-5 font-semibold">Project Description</h2>
+					<p>
+						This project was inspired by the 2022 Russian invasion of Ukraine and the resulting increased threat of nuclear warfare.
+						NuclearVis is a visualization dashboard made up of multiple types of visualizations which aim to illustrate the growth and danger of increasing nuclear power throughout history into the modern day.
+					</p>
+					<a href="CS360 - Alpha Release.pdf">
+						<h2 class="text-2xl underline pt-5 pb-2 font-semibold text-blue-700" >Alpha Release</h2>
+					</a>
+				</div>
+			</div></div></div>
+	<div class="w-full flex justify-center">
+		<div class="pt-10 h-screen w-2/3">
+			<div class="rounded-2xl border-4 border-[#622950] bg-yellow-100 h-full w-full">
+				<div id="linechart" class=" h-3/5"></div>
+				<div id="timeline" class="h-28"></div>
+				<div id="description" class="text-3xl font-semibold text-center h-fit"></div>				
 			</div>
+			<div class="h-4"></div>
+			<div id="pictogram" class="bg-[#622950] border-4 border-[#622950] rounded-t-2xl h-16"></div>
+			<div class="h-screen w-full pb-16">
+				<div class="rounded-b-2xl bg-yellow-100 border-4 border-[#622950] flex h-full">
+					<div id="bubblechart" class="flex justify-center w-4/6 h-full"> </div>
+					<div class="pb-5 pt-5"><div class="self-center h-full" style="border-left: 2px solid black"></div></div>
+					<div id="text-box" class="w-1/3 rounded-br-lg bg-yellow-100 w-2/6 h-full"> 
+						<div id="nukelabel" class="text-6xl pt-5 pl-5 font-bold">0</div>
+						<a class="text-4xl pl-5 font-semibold">Nuclear Warheads</a> 
+						<div id="desclabel" class="text-3xl pl-5 font-semibold"></div>
+					</div>
+				</div>
+				</div>
+			<script src="./bubblechart.js"></script>
+			<script src="./linechart.js"></script>
 		</div>
 	</div>
-	<script src="./bubblechart.js"></script>
-	<script src="./linechart.js"></script>
 </body>
 <style>
 

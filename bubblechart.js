@@ -77,7 +77,7 @@ function createBubbleChart(i) {
         index = i
 
         const bubble = data => d3.pack()
-            .size([width/3 * 2, height*2])
+            .size([document.getElementById("bubblechart").clientWidth, height*2])
             .padding(9)(d3.hierarchy({ children: data }).sum(d => +d.Number))
 
         const root = bubble(data)
@@ -145,7 +145,7 @@ function createPictograph(i, c) {
         })
 
         var fill = "#FFFFFF";
-        var fillActive = "red";
+        var fillActive = color(data[0].Country);
         
         const width = document.getElementById("pictogram").clientWidth
         const height = document.getElementById("pictogram").clientHeight;
@@ -184,7 +184,7 @@ function createPictograph(i, c) {
         
         //container to hold the grid
         var container = svg.append("g")
-            .attr("transform", "translate(50,30)")
+            .attr("transform", "translate(40,30)")
             .attr("class", "container")
             .attr("width", width)
             .attr("height", height)
@@ -198,8 +198,8 @@ function createPictograph(i, c) {
                 .attr('x', function(d){return x(d%numCols);})
                 .attr('y', function(d){return y(Math.floor(d/numCols));})
                 .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
-                .style('stroke', function(d){return ((d/20)*100) < percentNumber ? color(c) : "white";})
-                .style('stroke-width', 15)
+                .style('stroke', 'white')
+                .style('stroke-width', 10)
                 .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
     })
 }
@@ -214,7 +214,7 @@ function updatePictograph(i, c) {
         })
 
         var fill = "#FFFFFF";
-        var fillActive = "red";
+        var fillActive = color(data[0].Country);
 
         var percentNumber = data[0].Number/max * 100
 
@@ -224,8 +224,8 @@ function updatePictograph(i, c) {
 
         container.selectAll("use")
             .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
-            .style('stroke', function(d){return ((d/20)*100) < percentNumber ? color(c) : "white";})
-            .style('stroke-width', 15)
+            .style('stroke', "white")
+            .style('stroke-width', 10)
             .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
     })
 }
