@@ -21,6 +21,12 @@ var sliderTime = d3
     .tickFormat(d3.timeFormat('%Y'))
     .tickValues(dataTime)
     .default(new Date(1945, 10, 3))
+    .handle(
+        d3
+          .symbol()
+          .type(d3.symbolCircle)
+          .size(200)()
+      )
     .on('onchange', val => {
         gTime.select('.timeLabel').text(d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
@@ -39,16 +45,16 @@ var gTime = d3
     .attr('width', canvasWidth)
     .attr('height', canvasHeight)
     .append('g')
-    .attr('transform', 'translate(50,5)');
+    .attr('transform', 'translate(50,10)');
 
 gTime.append("text")
     .attr("x", (canvasWidth/2))
     .attr("y", 80)
     .attr("text-anchor", "middle")
     .attr("font-weight", 800)
-    .attr("font-size", "40px")
+    .attr("font-size", "50px")
     .attr("class", "timeLabel")
-    .attr('transform', "translate(-50,0)")
+    .attr('transform', "translate(-50,10)")
 
 gTime.call(sliderTime);
 
@@ -200,6 +206,7 @@ function createPictograph(i, c) {
                 .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
                 .style('stroke', 'white')
                 .style('stroke-width', 10)
+                .attr('class', 'use')
                 .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
     })
 }
@@ -237,9 +244,19 @@ function updateNukeLabel(i, c){
         data = data.filter(function(d) { 
             return d.Year == i && d.Country === c
         })
+        
+        const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "NK"]
+        countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia", "China", "France", "United Kingdom", "Pakistan", "Israel", "North Korea"])
 
         let desc = "That's about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
 
+        document.getElementById("yearLabel").innerHTML = "In " + data[0].Year + ","
+        if(data[0].Country === "US" || data[0].country == "UK"){
+            document.getElementById("countryLabel").innerHTML = "the " + countryScale(data[0].Country) + " had:"
+        } else { 
+            document.getElementById("countryLabel").innerHTML = countryScale(data[0].Country) + " had:"
+        }
+        document.getElementById("countryLabel").style = "-webkit-text-stroke: 1px " + color(c) + "; color: black";
         document.getElementById("nukelabel").innerHTML = (+data[0].Number).toLocaleString()
         document.getElementById("nukelabel").style = "color: " + color(c) + "; -webkit-text-stroke: 2px black";
         document.getElementById("desclabel").innerHTML = desc

@@ -256,8 +256,8 @@ d3.csv("warheads2.csv", function(d) {
         .attr("full-name", d => d.id)
         .attr("visibility", "visible")
 	      .style("stroke", function(d) { return z(d.id); })
-        .on("mouseout", exit)
-        .on("mouseover", hover)
+        /*.on("mouseout", exit)
+        .on("mouseover", hover)*/
 
 	  svg.selectAll(".label")
 		  .data(countries)
