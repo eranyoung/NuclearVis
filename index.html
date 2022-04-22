@@ -34,7 +34,7 @@
 			<div class="rounded-2xl border-4 border-[#622950] bg-yellow-100 h-full w-full">
 				<div id="linechart" class=" h-3/5"></div>
 				<div id="timeline" class="h-28"></div>
-				<div id="description" class="text-3xl font-semibold text-center h-fit"></div>				
+				<div id="description" class="overflow-scroll text-3xl font-semibold text-center w-full h-1/5 pl-3 pr-3"></div>				
 			</div>
 			<div class="h-4"></div>
 			<div id="pictogram" class="bg-[#622950] border-4 border-[#622950] rounded-t-2xl h-16"></div>
@@ -46,7 +46,7 @@
 						<div id="yearLabel" class="text-5xl pt-5 pl-5 font-bold">In 1945</div>
 						<div id="countryLabel" class="text-5xl pl-5 font-bold">the United States had</div>
 						<div id="nukelabel" class="text-6xl pl-5 font-bold">0</div>
-						<a class="text-4xl pl-5 font-semibold">Nuclear Warheads!</a> 
+						<div class="text-4xl pl-5 font-semibold">Nuclear Warheads!</div> 
 						<div id="desclabel" class="text-3xl pl-5 font-semibold"></div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 	}
 
 	#timeline { 
-		filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+		filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));
 		stroke: black;
 	}
 	
@@ -86,6 +86,14 @@
 	}
 	.axis text {
 		fill: black;
+		font: 10px sans-serif;
+		filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));
+	}
+
+	.axis path { 
+		stroke: black;
+		stroke-width: 3px;
+		filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
 	}
 
 	.slider text {
@@ -94,6 +102,7 @@
 
 	.line {
 		fill: none;
+		opacity: 0.6;
 		stroke-width: 5;
 		stroke-linejoin: round;
 		stroke-linecap: round;

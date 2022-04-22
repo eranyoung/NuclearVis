@@ -21,6 +21,7 @@ var sliderTime = d3
     .tickFormat(d3.timeFormat('%Y'))
     .tickValues(dataTime)
     .default(new Date(1945, 10, 3))
+    .displayValue(false)
     .handle(
         d3
           .symbol()

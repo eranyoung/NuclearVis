@@ -76,13 +76,13 @@ d3.csv("warheads2.csv", function(d) {
   	      for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
 	  }
 
-	  var countries = data.columns.slice(1).map(function(id) {
-	    return {
-	      id: id,
-	      values: data.map(function(d) {
-	        return {date: d.Date, warheads: d[id]};
-	      }),
-	    };
+	  var countries = data.columns.slice(1,8).map(function(id) {
+      return {
+        id: id,
+        values: data.map(function(d) {
+          return {date: d.Date, warheads: d[id]};
+        }),
+      };
 	  });
 
 	  x.domain(d3.extent(data, function(d) { return d.Date; }));
@@ -139,7 +139,7 @@ d3.csv("warheads2.csv", function(d) {
       .attr("class", "mouse-per-line");
 
     mousePerLine.append("circle")
-      .attr("r", 4)
+      .attr("r", 5)
       .style("stroke", function(d) {
         return z(d.id);
       })
