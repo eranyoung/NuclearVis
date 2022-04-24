@@ -99,9 +99,26 @@ d3.csv("warheads2.csv", function(d) {
 	    .append("text")
 	      .attr("transform", "rotate(-90)")
 	      .attr("y", 6)
-	      .attr("dy", "0.71em")
+	      .attr("dy", "1em")
+        .style("font-size", "15px")
 	      .attr("fill", "#000")
-	      .text("Warheads");
+	      .text("Nuclear Warheads");
+
+    g.append("line")
+      .attr("x1", width)
+      .attr("x2", width)
+      .attr("y1", 0)
+      .attr("y2", height)
+      .style("stroke", "black")
+      .style("stroke-width", 3)
+
+    g.append("line")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", height + 1)
+      .attr("y2", height + 1)
+      .style("stroke", "black")
+      .style("stroke-width", 3)
 
 	  var city = g.selectAll(".city")
 	    .data(countries)
@@ -265,16 +282,11 @@ d3.csv("warheads2.csv", function(d) {
       
     svg.append("g")
       .attr("class", "legendOrdinal")
-      .attr("transform", "translate(" + (width - 60) + ",20)");
+      .attr("transform", "translate(" + (width - 70) + ",30)");
     
     var legendOrdinal = d3.legendColor()
-      //d3 symbol creates a path-string, for example
-      //"M0,-8.059274488676564L9.306048591020996,
-      //8.059274488676564 -9.306048591020996,8.059274488676564Z"
       .shape("line")
       .shapePadding(0)
-      //use cellFilter to hide the "e" cell
-      .cellFilter(function(d){ return d.label !== "e" })
       .scale(ordinal);
     
     svg.select(".legendOrdinal")
