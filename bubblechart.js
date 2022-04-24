@@ -29,7 +29,7 @@ var sliderTime = d3
           .size(200)()
       )
     .on('onchange', val => {
-        gTime.select('.timeLabel').text(d3.timeFormat('%Y')(val));
+        document.getElementById('year').innerHTML = (d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
         currentYear = yearIndex;
         createBubbleChart(yearIndex)
@@ -46,16 +46,7 @@ var gTime = d3
     .attr('width', canvasWidth)
     .attr('height', canvasHeight)
     .append('g')
-    .attr('transform', 'translate(50,10)');
-
-gTime.append("text")
-    .attr("x", (canvasWidth/2))
-    .attr("y", 80)
-    .attr("text-anchor", "middle")
-    .attr("font-weight", 800)
-    .attr("font-size", "50px")
-    .attr("class", "timeLabel")
-    .attr('transform', "translate(-50,10)")
+    .attr('transform', 'translate(50,5)');
 
 gTime.call(sliderTime);
 

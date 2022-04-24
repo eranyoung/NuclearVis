@@ -144,9 +144,9 @@ d3.csv("warheads2.csv", function(d) {
 
     mouseG.append("path") // this is the black vertical line to follow mouse
       .attr("class", "mouse-line")
-      .style("stroke", "black")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
+      .style("stroke", "gray")
+      .style("stroke-width", "3px")
+      .style("opacity", "0.3");
       
     var lines = document.getElementsByClassName('line');    
     var mousePerLine = mouseG.selectAll('mouse-per-line')
@@ -163,11 +163,8 @@ d3.csv("warheads2.csv", function(d) {
       .style("fill", function(d) {
         return z(d.id);
       })
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-
-    mousePerLine.append("text")
-      .attr("transform", "translate(10,3)");
+      .style("stroke-width", "2px")
+      .style("opacity", "0.4");
 
     mouseG.append('rect') // append a rect to catch mouse movements on canvas
       .attr('width', canvasWidth) // can't catch mouse events on a g element
