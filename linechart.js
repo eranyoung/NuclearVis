@@ -52,7 +52,7 @@ var svg = d3.select("#linechart").append('svg')
     height = svg.attr("height") - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x = d3.scaleLinear().range([0, width - margin.right]),
+var x = d3.scaleLinear().range([0, width]),
     y = d3.scalePow().exponent(0.25).range([height, 0]),
     z = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -107,7 +107,7 @@ d3.csv("warheads2.csv", function(d) {
 	    .data(countries)
 	    .enter().append("svg")
 	      .attr("class", "city")
-		  .attr("width", width - margin.right)
+		  .attr("width", width)
       .attr("height", height)
 
 	  function hover(elem) {
@@ -259,21 +259,26 @@ d3.csv("warheads2.csv", function(d) {
         /*.on("mouseout", exit)
         .on("mouseover", hover)*/
 
-	  svg.selectAll(".label")
-		  .data(countries)
-		  .enter()
-          .append("text")
-	      .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
-		  .attr("class", "label")
-	      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.warheads) + ")"; })
-	      .attr("x", 55)
-		  .attr("y", 15)
-	      .attr("dy", "0.35em")
-		  .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
-	      .style("font", "10px sans-serif")
-	      .text(function(d) { return d.id; })
-		  .on("mouseout", exit)
-		  .on("click", click)
+    var ordinal = d3.scaleOrdinal()
+    .domain(["USA", "Russia", "China", "France", "UK", "Pakistan", "Israel", "India", "North Korea"])
+    .range(d3.schemeCategory10);
+      
+    svg.append("g")
+      .attr("class", "legendOrdinal")
+      .attr("transform", "translate(" + (width - 60) + ",20)");
+    
+    var legendOrdinal = d3.legendColor()
+      //d3 symbol creates a path-string, for example
+      //"M0,-8.059274488676564L9.306048591020996,
+      //8.059274488676564 -9.306048591020996,8.059274488676564Z"
+      .shape("line")
+      .shapePadding(0)
+      //use cellFilter to hide the "e" cell
+      .cellFilter(function(d){ return d.label !== "e" })
+      .scale(ordinal);
+    
+    svg.select(".legendOrdinal")
+      .call(legendOrdinal);
 
-      drawLineToolTip(1945)
+    drawLineToolTip(1945)
 })

@@ -17,7 +17,7 @@ var sliderTime = d3
     .min(d3.min(dataTime))
     .max(d3.max(dataTime))
     .step(1000 * 60 * 60 * 24 * 365)
-    .width(canvasWidth - 150)
+    .width(canvasWidth - 100)
     .tickFormat(d3.timeFormat('%Y'))
     .tickValues(dataTime)
     .default(new Date(1945, 10, 3))
