@@ -61,7 +61,7 @@ gTime.call(sliderTime);
 
 d3.select('.timeLabel').text(d3.timeFormat('%Y')(sliderTime.value()));
 
-const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "NK"]
+const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN", "NK"]
 var color = d3.scaleOrdinal(d3.schemeCategory10).domain(countries);
 
 var svg1 = d3.select('#bubblechart').append("svg")
@@ -191,7 +191,7 @@ function createPictograph(i, c) {
         
         //container to hold the grid
         var container = svg.append("g")
-            .attr("transform", "translate(40,30)")
+            .attr("transform", "translate(40,27)")
             .attr("class", "container")
             .attr("width", width)
             .attr("height", height)
@@ -245,11 +245,10 @@ function updateNukeLabel(i, c){
         data = data.filter(function(d) { 
             return d.Year == i && d.Country === c
         })
-        
-        const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN", "NK"]
+
         countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia", "China", "France", "United Kingdom", "Pakistan", "Israel", "India", "North Korea"])
 
-        let desc = "That's about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
+        let desc = "That's equivalent to about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
 
         document.getElementById("yearLabel").innerHTML = "In " + data[0].Year + ","
         if(data[0].Country === "US" || data[0].country == "UK"){
@@ -271,7 +270,29 @@ function updateDescription(i) {
         data = data.filter(function(d) { 
             return d.Date == i
         })
+
+        function hexToRGB(hex, alpha) {
+            var r = parseInt(hex.slice(1, 3), 16),
+                g = parseInt(hex.slice(3, 5), 16),
+                b = parseInt(hex.slice(5, 7), 16);
         
+            if (alpha) {
+                return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+            } else {
+                return "rgb(" + r + ", " + g + ", " + b + ")";
+            }
+        }        
+
+        const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN" , "NK"]
+        countryScale = d3.scaleOrdinal().domain(countries).range(["USA", "Russia", "China", "France", "UK", "Pakistan", "Israel", "India", "North Korea"])
+        //console.log(countries)
+        for(let i = 0; i < countries.length; i++) { 
+            const divID = countries[i] + "Counter"
+            const accessor = countryScale(countries[i])
+            document.getElementById(divID).innerHTML = data[0][accessor]
+            document.getElementById(divID).style = "background-color: " + hexToRGB(color(countries[i]), 0.7) + ";" + 
+            "box-shadow: 0px 0px 0px 4px " + hexToRGB(color(countries[i]), 0.3) + ";"
+        }
         
         document.getElementById("description").innerHTML = data[0].Descriptions;
         
