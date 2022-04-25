@@ -9,8 +9,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 	<script src="https://unpkg.com/d3-simple-slider"></script>
 </header>
-<body class="bg-gray-700 bg-repeat" style="background-image: url(background.png)">
-	<div class="w-full flex justify-center">
+<body class="bg-gray-700 bg-repeat" style="background-image: url(background.png);">
+	<div class="w-full flex justify-center" style="scroll-snap-align: start;">
 		<div class="pt-10 w-2/3">
 			<div class="rounded-xl border-4 border-[#622950] bg-yellow-100 h-300 w-full">
 				<div class="text-center">
@@ -28,9 +28,11 @@
 						<h2 class="text-2xl underline pt-5 pb-2 font-semibold text-blue-700" >Alpha Release</h2>
 					</a>
 				</div>
-			</div></div></div>
-	<div class="w-full flex justify-center">
-		<div class="pt-10 h-screen w-2/3">
+			</div>
+		</div>
+	</div>
+	<div class="w-full flex justify-center" style="scroll-snap-align: end;">
+		<div class="pt-5 h-screen w-2/3">
 			<div class="rounded-2xl border-4 border-[#622950] bg-yellow-100 pb-5 h-full w-full">
 				<div id="linechart" class="h-4/6"></div>
 				<div id="timelinecontainer" class="h-1/6">
@@ -50,7 +52,7 @@
 				<div id="description" class="no-scrollbar overflow-scroll text-3xl font-semibold text-center w-full h-1/6 pl-3 pr-3"></div>				
 			</div>
 			<div class="h-4"></div>
-			<div id="pictogram" class="bg-[#622950] border-4 border-[#622950] rounded-t-2xl h-16"></div>
+			<div id="pictogram" class="bg-[#622950] border-4 border-[#622950] rounded-t-2xl h-16" style="scroll-snap-align: start end;"></div>
 			<div class="h-screen w-full pb-16">
 				<div class="rounded-b-2xl bg-yellow-100 border-4 border-[#622950] flex h-full">
 					<div id="bubblechart" class="flex justify-center w-4/6 h-full"> </div>
@@ -131,5 +133,9 @@
 
 	.use {
 		filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.9));
+	}
+
+	html{ 
+		scroll-snap-type: y mandatory;
 	}
 </style>
