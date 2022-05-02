@@ -4,6 +4,7 @@ var canvasHeight = document.getElementById("linechart").clientHeight;
 function drawLineToolTip(year) { 
   d3.select(".mouse-line")
     .style("opacity", "1")
+    .style("stroke-dasharray", ("3, 3"))
     .attr("d", function() {
       var d = "M" + x(+year) + "," + canvasHeight;
       d += " " + x(+year) + "," + 0;
@@ -145,6 +146,7 @@ d3.csv("warheads2.csv", function(d) {
     mouseG.append("path") // this is the black vertical line to follow mouse
       .attr("class", "mouse-line")
       .style("stroke", "gray")
+      .style("stroke-dasharray", ("3, 3"))
       .style("stroke-width", "3px")
       .style("opacity", "0.3");
       

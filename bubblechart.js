@@ -228,6 +228,8 @@ function updatePictograph(i, c) {
         var container = svg.select('.container')
 
         container.selectAll("use")
+            .transition()
+            .duration(500)
             .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
             .style('stroke', "white")
             .style('stroke-width', 10)
