@@ -26,11 +26,11 @@ var sliderTime = d3
         d3
           .symbol()
           .type(d3.symbolCircle)
-          .size(200)()
+          .size(150)()
       )
     .on('onchange', val => {
-        gTime.select('.timeLabel').text(d3.timeFormat('%Y')(val));
         var yearIndex = d3.timeFormat('%Y')(val)
+        document.getElementById('timelineLabel').innerHTML = yearIndex
         currentYear = yearIndex;
         createBubbleChart(yearIndex)
         updatePictograph(yearIndex, currentCountry)
@@ -46,20 +46,9 @@ var gTime = d3
     .attr('width', canvasWidth)
     .attr('height', canvasHeight)
     .append('g')
-    .attr('transform', 'translate(50,10)');
-
-gTime.append("text")
-    .attr("x", (canvasWidth/2))
-    .attr("y", 80)
-    .attr("text-anchor", "middle")
-    .attr("font-weight", 800)
-    .attr("font-size", "50px")
-    .attr("class", "timeLabel")
-    .attr('transform', "translate(-50,10)")
+    .attr('transform', 'translate(50,7)');
 
 gTime.call(sliderTime);
-
-d3.select('.timeLabel').text(d3.timeFormat('%Y')(sliderTime.value()));
 
 const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN", "NK"]
 var color = d3.scaleOrdinal(d3.schemeCategory10).domain(countries);
@@ -135,6 +124,9 @@ function createBubbleChart(i) {
                 } else { 
                     return ""
                 }
+            })
+            .style("font", function(d){
+                console.log(d)
             })
             .style("text-anchor", "middle")
             .style("alignment-baseline", "central")
