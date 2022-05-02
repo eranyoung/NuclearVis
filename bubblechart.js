@@ -125,9 +125,14 @@ function createBubbleChart(i) {
                     return ""
                 }
             })
-            .style("font", function(d){
-                console.log(d)
+            .style("font-size", function(d){
+                console.log(d.r/10 + "px")
+                return (d.r/2) + "px"
             })
+            .style("fill", function(d) { 
+                return color(d.data.Country)
+            })
+            .style("stroke", "black")
             .style("text-anchor", "middle")
             .style("alignment-baseline", "central")
             .attr('transform', "translate(0, -100)")

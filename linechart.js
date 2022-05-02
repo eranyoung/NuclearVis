@@ -282,7 +282,7 @@ d3.csv("warheads2.csv", function(d) {
       .attr("transform", "translate(" + (width - 70) + ",30)");
     
     var legendOrdinal = d3.legendColor()
-      .shape("line")
+      .shape("rect")
       .shapePadding(0)
       .scale(ordinal);
     
