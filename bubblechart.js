@@ -50,8 +50,8 @@ var gTime = d3
 
 gTime.call(sliderTime);
 
-const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN", "NK"]
-var color = d3.scaleOrdinal(d3.schemeCategory10).domain(countries);
+const countries = ["US", "RS", "UK",  "FR", "CN", "IS", "IN", "PK", "NK"]
+var color = d3.scaleOrdinal(d3.schemeTableau10).domain(countries);
 
 var svg1 = d3.select('#bubblechart').append("svg")
     .attr("width", document.getElementById("bubblechart").clientWidth)
