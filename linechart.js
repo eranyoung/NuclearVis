@@ -21,7 +21,7 @@ function drawLineToolTip(year) {
   d3.selectAll(".mouse-per-line")
   .attr("transform", function(d, i) {
       var lines = document.getElementsByClassName('line');    
-      if(i < 9) {
+      if(i < 10) {
 
         var beginning = 0,
             end = lines[i].getTotalLength(),
@@ -37,7 +37,6 @@ function drawLineToolTip(year) {
           else if (pos.x < x(+year)) beginning = target;
           else break; //position found
         }
-          
         return "translate(" + x(+year) + "," + pos.y +")";
 
     }
@@ -201,24 +200,9 @@ d3.csv("warheads2.csv", function(d) {
 
         d3.selectAll(".mouse-per-line")
           .attr("transform", function(d, i) {
-
-              if(i < 9) {
-
-                var beginning = 0,
-                    end = lines[i].getTotalLength(),
-                    target = null;
-                  
-                while (lines[i]){
-                  target = Math.floor((beginning + end) / 2);
-                  pos = lines[i].getPointAtLength(target);
-                  if ((target === end || target === beginning) && pos.x !== mouse[0]) {
-                      break;
-                  }
-                  if (pos.x > mouse[0]) end = target;
-                  else if (pos.x < mouse[0]) beginning = target;
-                  else break; //position found
-                }
-                return "translate(" + mouse[0] + "," + pos.y +")";
+              if(i < 10) {
+                sliderTime.value([new Date(x.invert(mouse[0]), 10, 3)]);
+                //return "translate(" + Math.round(mouse[0]) + "," + pos.y +")";
             }
             
           })})
@@ -295,7 +279,7 @@ d3.csv("warheads2.csv", function(d) {
       .attr("transform", "translate(" + (width - 70) + ",30)");
     
     var legendOrdinal = d3.legendColor()
-      .shape("rect")
+      .shape("circle").shapeRadius(5)
       .shapePadding(0)
       .scale(ordinal);
     
