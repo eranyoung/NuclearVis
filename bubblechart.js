@@ -60,6 +60,20 @@ var svg1 = d3.select('#bubblechart').append("svg")
     width = svg1.attr("width") - margin.left - margin.right,
     height = svg1.attr("height") - margin.top - margin.bottom
 
+svg1.on("wheel", function(event, d) {
+    event.preventDefault()
+    var year = currentYear
+    var direction = event.wheelDelta < 0 ? 'down' : 'up';
+    if(direction === 'down' && currentYear > 1945) { 
+        year--
+    } else if(direction === 'up' && currentYear < 2020) {
+        year++
+    }
+    sliderTime.value([new Date(year, 10, 3)]);
+})
+
+svg1.style("overscroll-behavior-y", "contain")
+
 function createBubbleChart(i) {
     d3.csv('warheads.csv', function(d) {
         return d;
@@ -82,7 +96,7 @@ function createBubbleChart(i) {
             .data(root.children)
             .enter().append('g')
             .attr("class", "node")
-            .attr('transform', d => `translate(${d.x}, ${d.y})`);
+            .attr('transform', d => `translate(${d.x}, ${d.y})`)
     
         const circle = node.append('circle')
             .attr('r', d => d.r)
@@ -126,7 +140,6 @@ function createBubbleChart(i) {
                 }
             })
             .style("font-size", function(d){
-                console.log(d.r/10 + "px")
                 return (d.r/2) + "px"
             })
             .style("fill", function(d) { 

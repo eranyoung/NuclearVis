@@ -198,7 +198,7 @@ d3.csv("warheads2.csv", function(d) {
                 var beginning = 0,
                     end = lines[i].getTotalLength(),
                     target = null;
-                
+                  
                 while (lines[i]){
                   target = Math.floor((beginning + end) / 2);
                   pos = lines[i].getPointAtLength(target);
@@ -209,11 +209,7 @@ d3.csv("warheads2.csv", function(d) {
                   else if (pos.x < mouse[0]) beginning = target;
                   else break; //position found
                 }
-                  
-                
-                  
                 return "translate(" + mouse[0] + "," + pos.y +")";
-
             }
             
           })})
