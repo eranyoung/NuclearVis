@@ -307,7 +307,7 @@ function updateDescription(i) {
         }
         
         document.getElementById("description").innerHTML = data[0].Descriptions;
-        
+        document.getElementById("description").setAttribute("animation", "")
     })
 }
 
