@@ -14,32 +14,31 @@ function drawLineToolTip(year) {
       return d;
     });
   d3.selectAll(".mouse-per-line circle")
-    .style("opacity", "1");
+    .style("opacity", "0.8");
   d3.selectAll(".mouse-per-line text")
     .style("opacity", "1");
 
   d3.selectAll(".mouse-per-line")
   .attr("transform", function(d, i) {
-      var lines = document.getElementsByClassName('line');    
-      if(i < 10) {
+      var lines = document.getElementsByClassName('line');
 
-        var beginning = 0,
-            end = lines[i].getTotalLength(),
-            target = null;
-        
-        while (lines[i]){
-          target = Math.floor((beginning + end) / 2);
-          pos = lines[i].getPointAtLength(target);
-          if ((target === end || target === beginning) && pos.x !== x(+year)) {
-              break;
-          }
-          if (pos.x > x(+year)) end = target;
-          else if (pos.x < x(+year)) beginning = target;
-          else break; //position found
+      var beginning = 0,
+          end = lines[i].getTotalLength(),
+          target = null;
+      
+      while (lines[i]){
+        target = Math.floor((beginning + end) / 2);
+        pos = lines[i].getPointAtLength(target);
+        if ((target === end || target === beginning) && pos.x !== x(+year)) {
+            break;
         }
-        return "translate(" + x(+year) + "," + pos.y +")";
+        if (pos.x > x(+year)) end = target;
+        else if (pos.x < x(+year)) beginning = target;
+        else break; //position found
+      }
+      return "translate(" + x(+year) + "," + pos.y +")";
 
-    }
+    
     
   })
 }
@@ -139,13 +138,15 @@ d3.csv("warheads2.csv", function(d) {
       var full = countryScale(id)
       id = full.substring(0, 3).toUpperCase()
 		  let path = city.select('#' + id);
-      console.log(id)
       if (path.attr('visibility') == 'hidden') {
         return;
       }
       city.selectAll('.line').style("stroke", "grey")
+      d3.selectAll('.mouse-per-line circle').style("fill", "grey").style("stroke", "grey").style("opacity", 0.1)
+      d3.select('#' + id + "Circle").style("fill", z(full)).style("stroke", z(full)).style("opacity", 1)
       path.style("stroke-width", "5px")
       path.style("stroke", z(full))
+      path.style("opacity", 1)
 	  }
 
     var mouseG = city.append("g")
@@ -167,6 +168,9 @@ d3.csv("warheads2.csv", function(d) {
 
     mousePerLine.append("circle")
       .attr("r", 5)
+      .attr("id", function(d) {
+        return d.id.substring(0, 3).toUpperCase() + "Circle"
+      })
       .style("stroke", function(d) {
         return z(d.id);
       })
@@ -174,7 +178,7 @@ d3.csv("warheads2.csv", function(d) {
         return z(d.id);
       })
       .style("stroke-width", "2px")
-      .style("opacity", "0.4");
+      .style("opacity", "0.8");
 
     mouseG.append('rect') // append a rect to catch mouse movements on canvas
       .attr('width', canvasWidth) // can't catch mouse events on a g element
@@ -185,7 +189,7 @@ d3.csv("warheads2.csv", function(d) {
         d3.select(".mouse-line")
           .style("opacity", "1");
         d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "1");
+          .style("opacity", "0.8");
         d3.selectAll(".mouse-per-line text")
           .style("opacity", "1");
       })
@@ -218,9 +222,15 @@ d3.csv("warheads2.csv", function(d) {
       return;
       }
       city.selectAll('.line').style('stroke', d => {
-      return z(d.id)
+        return z(d.id)
       });
+      d3.selectAll('.mouse-per-line circle').style("fill", d => {
+        return z(d.id)
+      }).style("stroke", d => {
+        return z(d.id)
+      }).style("opacity", 0.8)
 		  city.selectAll('.line').style('stroke-width', "5px")
+      city.selectAll('.line').style('opacity', 0.7)
 	  }
 
 	  function click(elem) {
