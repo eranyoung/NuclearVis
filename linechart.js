@@ -1,6 +1,9 @@
 var canvasWidth = document.getElementById("linechart").clientWidth;
 var canvasHeight = document.getElementById("linechart").clientHeight;
 
+const countriesList = ["US", "RS", "UK", "FR", "CN", "IS", "IN" ,"PK", "NK"]
+countryScale = d3.scaleOrdinal().domain(countriesList).range(["USA","Russia","UK","France","China","Israel","India","Pakistan","North Korea"])
+
 function drawLineToolTip(year) { 
   d3.select(".mouse-line")
     .style("opacity", "1")
@@ -55,7 +58,7 @@ var svg = d3.select("#linechart").append('svg')
 
 var x = d3.scaleLinear().range([0, width]),
     y = d3.scalePow().exponent(0.25).range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+    z = d3.scaleOrdinal(d3.schemeTableau10);
 
 const makeLine = (xScale) => d3.line()
 	.curve(d3.curveBasis)
@@ -90,13 +93,16 @@ d3.csv("warheads2.csv", function(d) {
 
 	  y.domain([0, 40159]);
 
-	  z.domain(countries.map(function(c) { return c.id; }));
+	  z.domain(countries.map(function(c) { 
+      console.log(c)
+      return c.id; 
+    }));
 
 	  
 
 	  g.append("g")
 	      .attr("class", "axis axis--y")
-	      .call(d3.axisLeft(y))
+	      .call(d3.axisLeft(y).tickValues([0, 10, 50, 100, 200, 500, 1000, 5000, 10000, 20000, 30000, 40000]))
 	    .append("text")
 	      .attr("transform", "rotate(-90)")
 	      .attr("y", 6)
@@ -130,14 +136,17 @@ d3.csv("warheads2.csv", function(d) {
 
 	  function hover(elem) {
 		  var attrs = elem.srcElement.attributes;
-		  let id = attrs['data-id'].value;
+		  var id = attrs.id.value.substring(0,2)
+      var full = countryScale(id)
+      id = full.substring(0, 3).toUpperCase()
 		  let path = city.select('#' + id);
+      console.log(id)
       if (path.attr('visibility') == 'hidden') {
         return;
       }
       city.selectAll('.line').style("stroke", "grey")
       path.style("stroke-width", "5px")
-      path.style("stroke", z(attrs['full-name'].value))
+      path.style("stroke", z(full))
 	  }
 
     var mouseG = city.append("g")
@@ -217,7 +226,9 @@ d3.csv("warheads2.csv", function(d) {
 
 	  function exit(elem) {
       var attrs = elem.srcElement.attributes;
-      let id = attrs['data-id'].value;
+		  var id = attrs.id.value.substring(0,2)
+      var full = countryScale(id)
+      id = full.substring(0, 3).toUpperCase()
       let path = city.select('#' + id);
       if (path.attr('visibility') == 'hidden') {
       return;
@@ -225,7 +236,7 @@ d3.csv("warheads2.csv", function(d) {
       city.selectAll('.line').style('stroke', d => {
       return z(d.id)
       });
-		  city.selectAll('.line').style('stroke-width', "2px")
+		  city.selectAll('.line').style('stroke-width', "5px")
 	  }
 
 	  function click(elem) {
@@ -270,10 +281,14 @@ d3.csv("warheads2.csv", function(d) {
 	      .style("stroke", function(d) { return z(d.id); })
         /*.on("mouseout", exit)
         .on("mouseover", hover)*/
+    
+    d3.selectAll(".counter")
+      .on("mouseover", hover)
+      .on("mouseout", exit)
 
     var ordinal = d3.scaleOrdinal()
-    .domain(["USA", "Russia", "China", "France", "UK", "Pakistan", "Israel", "India", "North Korea"])
-    .range(d3.schemeCategory10);
+    .domain(z.domain())
+    .range(d3.schemeTableau10);
       
     svg.append("g")
       .attr("class", "legendOrdinal")
