@@ -99,10 +99,6 @@ function createBubbleChart(i) {
             .attr('transform', d => `translate(${d.x}, ${d.y})`)
     
         const circle = node.append('circle')
-            .attr('r', d => d.r)
-            .style('fill', function(d) { 
-                return color(d.data.Country)
-            })
             .on("click", function(event, d) {
                 currentCountry = d.data.Country;
                 updatePictograph(index, currentCountry)
@@ -118,9 +114,16 @@ function createBubbleChart(i) {
                 updateNukeLabel(index, currentCountry)
                 
             })
+            .transition()
+            .duration(1000)
+            .ease(d3.easeBounce)
+            .attr('r', d => d.r)
+            .style('fill', function(d) { 
+                return color(d.data.Country)
+            })
             .style('stroke', function(d) {
                 if(d.data.Country === currentCountry){
-                    return 'white'
+                    return 'black'
                 } else { 
                     return color(d.data.Country)
                 }
@@ -132,6 +135,9 @@ function createBubbleChart(i) {
             
 
         const label = node.append('text')
+            .transition()
+            .duration(1000)
+            .ease(d3.easeBounce)
             .text(function(d) { 
                 if(d.data.Number > 0) { 
                     return d.data.Country
@@ -242,7 +248,7 @@ function updatePictograph(i, c) {
 
         container.selectAll("use")
             .transition()
-            .duration(500)
+            .duration(750)
             .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
             .style('stroke', "white")
             .style('stroke-width', 10)
