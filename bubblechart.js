@@ -115,9 +115,6 @@ function createBubbleChart(i) {
                 updateNukeLabel(index, currentCountry)
                 
             })
-            .transition()
-            .duration(300)
-            .ease(d3.easeQuadIn)
             .attr('r', d => d.r)
             .style('fill', function(d) { 
                 return color(d.data.Country)
@@ -136,9 +133,6 @@ function createBubbleChart(i) {
             
 
         const label = node.append('text')
-            .transition()
-            .duration(300)
-            .ease(d3.easeQuadIn)
             .text(function(d) { 
                 if(d.data.Number > 0) { 
                     return d.data.Country
@@ -225,6 +219,7 @@ function createPictograph(i, c) {
                 .style('stroke', 'white')
                 .style('stroke-width', 10)
                 .attr('class', 'use')
+                .attr('oldPerc', percentNumber)
                 .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
     })
 }
@@ -248,12 +243,22 @@ function updatePictograph(i, c) {
         var container = svg.select('.container')
 
         container.selectAll("use")
-            .transition()
-            .duration(750)
-            .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
+            .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
+            .attr('fill', function(d){
+                if(((d/20)*100) > d3.select(this).attr("oldPerc")) {
+                    d3.select(this)
+                    .attr("transform", "scale(0)")
+                    .transition()
+                    .delay(50)
+                    .ease(d3.easeBounceInOut)
+                    .duration(500)
+                    .attr("transform", "scale(1)")
+                    return fillActive;
+                }return ((d/20)*100) < percentNumber ? fillActive : fill;
+            })
             .style('stroke', "white")
             .style('stroke-width', 10)
-            .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
+            .attr("oldPerc", percentNumber)
     })
 }
 
