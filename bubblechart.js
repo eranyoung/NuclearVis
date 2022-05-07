@@ -66,10 +66,11 @@ svg1.on("wheel", function(event, d) {
     var direction = event.wheelDelta < 0 ? 'down' : 'up';
     if(direction === 'down' && currentYear > 1945) { 
         year--
+        sliderTime.value([new Date(year, 10, 3)]);
     } else if(direction === 'up' && currentYear < 2020) {
         year++
+        sliderTime.value([new Date(year, 10, 3)]);
     }
-    sliderTime.value([new Date(year, 10, 3)]);
 })
 
 svg1.style("overscroll-behavior-y", "contain")
@@ -115,8 +116,8 @@ function createBubbleChart(i) {
                 
             })
             .transition()
-            .duration(1000)
-            .ease(d3.easeBounce)
+            .duration(300)
+            .ease(d3.easeQuadIn)
             .attr('r', d => d.r)
             .style('fill', function(d) { 
                 return color(d.data.Country)
@@ -136,8 +137,8 @@ function createBubbleChart(i) {
 
         const label = node.append('text')
             .transition()
-            .duration(1000)
-            .ease(d3.easeBounce)
+            .duration(300)
+            .ease(d3.easeQuadIn)
             .text(function(d) { 
                 if(d.data.Number > 0) { 
                     return d.data.Country
@@ -266,15 +267,17 @@ function updateNukeLabel(i, c){
 
         countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia","United Kingdom", "France", "China", "Israel", "India", "Pakistan", "North Korea"])
 
-        let desc = "That's equivalent to about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
+        let desc = "That's equivalent to about " + (+data[0].Number * 30).toLocaleString() + " kilotons of TNT, enough to destroy San Francisco ~" + Math.round(((+data[0].Number * 30 * 1.5) / 121)).toLocaleString() + " times!"
 
         document.getElementById("yearLabel").innerHTML = "In " + data[0].Year + ","
-        if(data[0].Country === "US" || data[0].country == "UK"){
-            document.getElementById("countryLabel").innerHTML = "the " + countryScale(data[0].Country) + " had:"
+        if(data[0].Country === "US" || data[0].Country == "UK"){
+            document.getElementById("countryLabel3").innerHTML = "the "
+            document.getElementById("countryLabel2").innerHTML = countryScale(data[0].Country)
         } else { 
-            document.getElementById("countryLabel").innerHTML = countryScale(data[0].Country) + " had:"
+            document.getElementById("countryLabel3").innerHTML = ""
+            document.getElementById("countryLabel2").innerHTML = countryScale(data[0].Country)
         }
-        document.getElementById("countryLabel").style = "-webkit-text-stroke: 1px " + color(c) + "; color: black";
+        document.getElementById("countryLabel2").style = "-webkit-text-stroke: 1px " + color(c) + "; color: black";
         document.getElementById("nukelabel").innerHTML = (+data[0].Number).toLocaleString()
         document.getElementById("nukelabel").style = "color: " + color(c) + "; -webkit-text-stroke: 2px black";
         document.getElementById("desclabel").innerHTML = desc
@@ -313,7 +316,6 @@ function updateDescription(i) {
         }
         
         document.getElementById("description").innerHTML = data[0].Descriptions;
-        document.getElementById("description").setAttribute("animation", "")
     })
 }
 
