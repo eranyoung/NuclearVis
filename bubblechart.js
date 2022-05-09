@@ -72,7 +72,7 @@ svg1.on("wheel", function(event, d) {
     sliderTime.value([new Date(year, 10, 3)]);
 })
 
-svg1.style("overscroll-behavior-y", "contain")
+//svg1.style("overscroll-behavior-y", "contain")
 
 function createBubbleChart(i) {
     d3.csv('warheads.csv', function(d) {
