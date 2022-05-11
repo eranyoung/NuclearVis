@@ -315,7 +315,7 @@ function updateDescription(i) {
         for(let i = 0; i < countries.length; i++) { 
             const divID = countries[i] + "Counter"
             const accessor = countryScale(countries[i])
-            document.getElementById(divID).innerHTML = data[0][accessor]
+            document.getElementById(divID).innerHTML = d3.format(",")(data[0][accessor])
             document.getElementById(divID).style = "background-color: " + hexToRGB(color(countries[i]), 0.7) + ";" + 
             "box-shadow: 0px 0px 0px 4px " + hexToRGB(color(countries[i]), 0.3) + ";"
         }
