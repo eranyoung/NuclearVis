@@ -66,10 +66,11 @@ svg1.on("wheel", function(event, d) {
     var direction = event.wheelDelta < 0 ? 'down' : 'up';
     if(direction === 'down' && currentYear > 1945) { 
         year--
+        sliderTime.value([new Date(year, 10, 3)]);
     } else if(direction === 'up' && currentYear < 2020) {
         year++
+        sliderTime.value([new Date(year, 10, 3)]);
     }
-    sliderTime.value([new Date(year, 10, 3)]);
 })
 
 //svg1.style("overscroll-behavior-y", "contain")
@@ -99,10 +100,6 @@ function createBubbleChart(i) {
             .attr('transform', d => `translate(${d.x}, ${d.y})`)
     
         const circle = node.append('circle')
-            .attr('r', d => d.r)
-            .style('fill', function(d) { 
-                return color(d.data.Country)
-            })
             .on("click", function(event, d) {
                 currentCountry = d.data.Country;
                 updatePictograph(index, currentCountry)
@@ -118,9 +115,13 @@ function createBubbleChart(i) {
                 updateNukeLabel(index, currentCountry)
                 
             })
+            .attr('r', d => d.r)
+            .style('fill', function(d) { 
+                return color(d.data.Country)
+            })
             .style('stroke', function(d) {
                 if(d.data.Country === currentCountry){
-                    return 'white'
+                    return 'black'
                 } else { 
                     return color(d.data.Country)
                 }
@@ -218,6 +219,7 @@ function createPictograph(i, c) {
                 .style('stroke', 'white')
                 .style('stroke-width', 10)
                 .attr('class', 'use')
+                .attr('oldPerc', percentNumber)
                 .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
     })
 }
@@ -241,12 +243,22 @@ function updatePictograph(i, c) {
         var container = svg.select('.container')
 
         container.selectAll("use")
-            .transition()
-            .duration(500)
-            .attr('fill', function(d){return ((d/20)*100) < percentNumber ? fillActive : fill;})
+            .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
+            .attr('fill', function(d){
+                if(((d/20)*100) > d3.select(this).attr("oldPerc")) {
+                    d3.select(this)
+                    .attr("transform", "scale(0)")
+                    .transition()
+                    .delay(50)
+                    .ease(d3.easeBounceInOut)
+                    .duration(500)
+                    .attr("transform", "scale(1)")
+                    return fillActive;
+                }return ((d/20)*100) < percentNumber ? fillActive : fill;
+            })
             .style('stroke', "white")
             .style('stroke-width', 10)
-            .style('opacity', function(d){return ((d/20)*100) < percentNumber ? 1 : 0;})
+            .attr("oldPerc", percentNumber)
     })
 }
 
@@ -260,15 +272,17 @@ function updateNukeLabel(i, c){
 
         countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia","United Kingdom", "France", "China", "Israel", "India", "Pakistan", "North Korea"])
 
-        let desc = "That's equivalent to about " + (+data[0].Number * 6000000).toLocaleString() + " tons of TNT!"
+        let desc = "That's equivalent to about " + (+data[0].Number * 30).toLocaleString() + " kilotons of TNT, enough to destroy San Francisco ~" + Math.round(((+data[0].Number * 30 * 1.5) / 121)).toLocaleString() + " times!"
 
         document.getElementById("yearLabel").innerHTML = "In " + data[0].Year + ","
-        if(data[0].Country === "US" || data[0].country == "UK"){
-            document.getElementById("countryLabel").innerHTML = "the " + countryScale(data[0].Country) + " had:"
+        if(data[0].Country === "US" || data[0].Country == "UK"){
+            document.getElementById("countryLabel3").innerHTML = "the "
+            document.getElementById("countryLabel2").innerHTML = countryScale(data[0].Country)
         } else { 
-            document.getElementById("countryLabel").innerHTML = countryScale(data[0].Country) + " had:"
+            document.getElementById("countryLabel3").innerHTML = ""
+            document.getElementById("countryLabel2").innerHTML = countryScale(data[0].Country)
         }
-        document.getElementById("countryLabel").style = "-webkit-text-stroke: 1px " + color(c) + "; color: black";
+        document.getElementById("countryLabel2").style = "-webkit-text-stroke: 1px " + color(c) + "; color: black";
         document.getElementById("nukelabel").innerHTML = (+data[0].Number).toLocaleString()
         document.getElementById("nukelabel").style = "color: " + color(c) + "; -webkit-text-stroke: 2px black";
         document.getElementById("desclabel").innerHTML = desc
@@ -307,7 +321,6 @@ function updateDescription(i) {
         }
         
         document.getElementById("description").innerHTML = data[0].Descriptions;
-        document.getElementById("description").setAttribute("animation", "")
     })
 }
 
