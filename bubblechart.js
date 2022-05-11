@@ -74,11 +74,16 @@ svg1.on("wheel", function(event, d) {
 })
 
 //svg1.style("overscroll-behavior-y", "contain")
+svg1.append("text")
+    .attr("x", 5)
+    .attr("y", 20)
+    .text('Scroll to change year!')
 
 function createBubbleChart(i) {
     d3.csv('warheads.csv', function(d) {
         return d;
     }).then(function(data) { 
+
         svg1.selectAll(".node").remove();
 
         data = data.filter(function(d) { 
