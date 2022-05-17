@@ -71,7 +71,11 @@ svg1.on("wheel", function(event, d) { //allow bubble chart to have scroll intera
     }
 })
 
-svg1.style("overscroll-behavior-y", "contain")
+//svg1.style("overscroll-behavior-y", "contain")
+svg1.append("text")
+    .attr("x", 5)
+    .attr("y", 20)
+    .text('Scroll to change year!')
 
 function createBubbleChart(i) { //function to create and update bubble chart
     d3.csv('warheads.csv', function(d) {
@@ -313,7 +317,7 @@ function updateDescription(i) { //Info for description under timeline
         for(let i = 0; i < countries.length; i++) { //setting each counter's color and info
             const divID = countries[i] + "Counter"
             const accessor = countryScale(countries[i])
-            document.getElementById(divID).innerHTML = data[0][accessor]
+            document.getElementById(divID).innerHTML = d3.format(",")(data[0][accessor])
             document.getElementById(divID).style = "background-color: " + hexToRGB(color(countries[i]), 0.7) + ";" + 
             "box-shadow: 0px 0px 0px 4px " + hexToRGB(color(countries[i]), 0.3) + ";"
         }
