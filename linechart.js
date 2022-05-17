@@ -1,10 +1,10 @@
-var canvasWidth = document.getElementById("linechart").clientWidth;
+var canvasWidth = document.getElementById("linechart").clientWidth; //for scaling chart to window size
 var canvasHeight = document.getElementById("linechart").clientHeight;
 
 const countriesList = ["US", "RS", "UK", "FR", "CN", "IS", "IN" ,"PK", "NK"]
 countryScale = d3.scaleOrdinal().domain(countriesList).range(["USA","Russia","UK","France","China","Israel","India","Pakistan","North Korea"])
 
-function drawLineToolTip(year) { 
+function drawLineToolTip(year) { //drawing tooltip for hover
   d3.select(".mouse-line")
     .style("opacity", "1")
     .style("stroke-dasharray", ("3, 3"))
@@ -55,13 +55,8 @@ var svg = d3.select("#linechart").append('svg')
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.scaleLinear().range([0, width]),
-    y = d3.scalePow().exponent(0.25).range([height, 0]),
+    y = d3.scalePow().exponent(0.25).range([height, 0]), //special y scale because of drastic difference in numbers
     z = d3.scaleOrdinal(d3.schemeTableau10);
-
-const makeLine = (xScale) => d3.line()
-	.curve(d3.curveBasis)
-	.x(function(d) { return xScale(d.date); })
-    .y(function(d) { return y(d.warheads); });
 
 var line = d3.line()
     .curve(d3.curveBasis)
@@ -72,13 +67,14 @@ d3.csv("warheads2.csv", function(d) {
 	return d;
 }).then(function(data) {
 
+    //formatting data for line chart
 	  let columns = data.columns
 	  for (d of data) {
 		      d.date = d.Date;
   	      for (var i = 1, n = columns.length, c; i < n; ++i) d[c = columns[i]] = +d[c];
 	  }
 
-	  var countries = data.columns.slice(1,10).map(function(id) {
+	  var countries = columns.slice(1,10).map(function(id) {  
       return {
         id: id,
         values: data.map(function(d) {
@@ -89,18 +85,15 @@ d3.csv("warheads2.csv", function(d) {
 
 	  x.domain(d3.extent(data, function(d) { return d.Date; }));
 
-	  y.domain([0, 40159]);
+	  y.domain([0, max]);
 
 	  z.domain(countries.map(function(c) { 
-      console.log(c)
       return c.id; 
     }));
 
-	  
-
 	  g.append("g")
 	      .attr("class", "axis axis--y")
-	      .call(d3.axisLeft(y).tickValues([0, 10, 50, 100, 200, 500, 1000, 5000, 10000, 20000, 30000, 40000]))
+	      .call(d3.axisLeft(y).tickValues([0, 10, 50, 100, 200, 500, 1000, 5000, 10000, 20000, 30000, 41000])) //custom tick values due to power scale
 	    .append("text")
 	      .attr("transform", "rotate(-90)")
 	      .attr("y", 6)
@@ -109,6 +102,7 @@ d3.csv("warheads2.csv", function(d) {
 	      .attr("fill", "#000")
 	      .text("Nuclear Warheads");
 
+    //line chart "box" lines
     g.append("line")
       .attr("x1", width)
       .attr("x2", width)
@@ -125,31 +119,31 @@ d3.csv("warheads2.csv", function(d) {
       .style("stroke", "black")
       .style("stroke-width", 3)
 
-	  var city = g.selectAll(".city")
+	  var country = g.selectAll(".country")
 	    .data(countries)
 	    .enter().append("svg")
-	      .attr("class", "city")
+	      .attr("class", "country")
 		  .attr("width", width)
       .attr("height", height)
 
-	  function hover(elem) {
+	  function hover(elem) { //hover interaction
 		  var attrs = elem.srcElement.attributes;
 		  var id = attrs.id.value.substring(0,2)
       var full = countryScale(id)
       id = full.substring(0, 3).toUpperCase()
-		  let path = city.select('#' + id);
+		  let path = country.select('#' + id);
       if (path.attr('visibility') == 'hidden') {
         return;
       }
-      city.selectAll('.line').style("stroke", "grey")
+      country.selectAll('.line').style("stroke", "grey") //set all lines to grey
       d3.selectAll('.mouse-per-line circle').style("fill", "grey").style("stroke", "grey").style("opacity", 0.1)
-      d3.select('#' + id + "Circle").style("fill", z(full)).style("stroke", z(full)).style("opacity", 1)
-      path.style("stroke-width", "5px")
+      d3.select('#' + id + "Circle").style("fill", z(full)).style("stroke", z(full)).style("opacity", 1) //set selected line to its color
+      path.style("stroke-width", "5px") //make that line more apparent
       path.style("stroke", z(full))
       path.style("opacity", 1)
 	  }
 
-    var mouseG = city.append("g")
+    var mouseG = country.append("g")
       .attr("class", "mouse-over-effects");
 
     mouseG.append("path") // this is the black vertical line to follow mouse
@@ -158,8 +152,7 @@ d3.csv("warheads2.csv", function(d) {
       .style("stroke-dasharray", ("3, 3"))
       .style("stroke-width", "3px")
       .style("opacity", "0.3");
-      
-    var lines = document.getElementsByClassName('line');    
+         
     var mousePerLine = mouseG.selectAll('mouse-per-line')
       .data(countries)
       .enter()
@@ -206,22 +199,20 @@ d3.csv("warheads2.csv", function(d) {
           .attr("transform", function(d, i) {
               if(i < 10) {
                 sliderTime.value([new Date(x.invert(mouse[0]), 10, 3)]);
-                //return "translate(" + Math.round(mouse[0]) + "," + pos.y +")";
             }
-            
-          })})
+      })})
           
 
-	  function exit(elem) {
+	  function exit(elem) { //reset all elements once hover is over
       var attrs = elem.srcElement.attributes;
 		  var id = attrs.id.value.substring(0,2)
       var full = countryScale(id)
       id = full.substring(0, 3).toUpperCase()
-      let path = city.select('#' + id);
+      let path = country.select('#' + id);
       if (path.attr('visibility') == 'hidden') {
       return;
       }
-      city.selectAll('.line').style('stroke', d => {
+      country.selectAll('.line').style('stroke', d => {
         return z(d.id)
       });
       d3.selectAll('.mouse-per-line circle').style("fill", d => {
@@ -229,57 +220,24 @@ d3.csv("warheads2.csv", function(d) {
       }).style("stroke", d => {
         return z(d.id)
       }).style("opacity", 0.8)
-		  city.selectAll('.line').style('stroke-width', "5px")
-      city.selectAll('.line').style('opacity', 0.7)
+		  country.selectAll('.line').style('stroke-width', "5px")
+      country.selectAll('.line').style('opacity', 0.7)
 	  }
 
-	  function click(elem) {
-	    var attrs = elem.srcElement.attributes;
-		  let id = attrs['data-id'].value;
-	  	let path = city.select('#' + id);
-      if (path.attr('visibility') == 'hidden') {
-        path.attr("visibility", "visible")
-      } else { 
-        path.attr("visibility", "hidden")
-      } 
-	  }
-    /*
-	  const xAxis = (g, x) => g
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.format("d")))
-    /*
-	  function zoomed(event) {
-      const xz = event.transform.rescaleX(x);
-      city.selectAll('.line').attr('d', function(d) { return makeLine(xz)(d.values); })
-      x_axis.call(xAxis, xz);
-	  }
-
-	  const zoom = d3.zoom()
-	      .scaleExtent([1, 5])
-	      .extent([[0, 0], [width, height]])
-	      .translateExtent([[margin.left, -Infinity], [width - margin.right, Infinity]])
-	      .on("zoom", zoomed);
-
-	  svg.call(zoom)
-	    .transition()
-	      .duration(100)
-	      .call(zoom.scaleTo, 1, [x(Date.UTC(2012, 1, 1)), 0]);*/ 
-
-	  city.append("path")
+	  country.append("path")
 	      .attr("class", "line")
-	      .attr("d", function(d) { return line(d.values); })
+	      .attr("d", function(d) { return line(d.values); }) 
         .attr("id", d => d.id.substring(0, 3).toUpperCase())
-        .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
+        .attr("data-id", d => d.id.substring(0, 3).toUpperCase()) //attributes for interaction
         .attr("full-name", d => d.id)
         .attr("visibility", "visible")
 	      .style("stroke", function(d) { return z(d.id); })
-        /*.on("mouseout", exit)
-        .on("mouseover", hover)*/
-    
-    d3.selectAll(".counter")
+
+    d3.selectAll(".counter") //hover action for counters
       .on("mouseover", hover)
       .on("mouseout", exit)
 
+    //scale for legend
     var ordinal = d3.scaleOrdinal()
     .domain(z.domain())
     .range(d3.schemeTableau10);
@@ -288,6 +246,7 @@ d3.csv("warheads2.csv", function(d) {
       .attr("class", "legendOrdinal")
       .attr("transform", "translate(" + (width - 70) + ",30)");
     
+    //legend
     var legendOrdinal = d3.legendColor()
       .shape("circle").shapeRadius(5)
       .shapePadding(0)

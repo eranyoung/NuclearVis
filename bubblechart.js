@@ -1,15 +1,13 @@
-// Time
-var canvasWidth = document.getElementById("timeline").clientWidth;
+var canvasWidth = document.getElementById("timeline").clientWidth; //for scaling chart to window size
 var canvasHeight = document.getElementById("timeline").clientHeight;
 
-var dataTime = [];
+var dataTime = []; //array of times for the timeline
 for(let i = 1945; i <= 2020; i +=5) { 
     dataTime.push(new Date(i, 10, 3));
 }
 
-
 var currentCountry = "US"
-var max = 41000
+var max = 41000 
 var currentYear = 1945;
 
 var sliderTime = d3
@@ -21,18 +19,18 @@ var sliderTime = d3
     .tickFormat(d3.timeFormat('%Y'))
     .tickValues(dataTime)
     .default(new Date(1945, 10, 3))
-    .displayValue(false)
+    .displayValue(false) //don't use inbuilt display, we are using a seperate label
     .handle(
         d3
           .symbol()
           .type(d3.symbolCircle)
           .size(150)()
       )
-    .on('onchange', val => {
+    .on('onchange', val => { //whenever the timeline value changes, can be set or the slider can be dragged
         var yearIndex = d3.timeFormat('%Y')(val)
         document.getElementById('timelineLabel').innerHTML = yearIndex
         currentYear = yearIndex;
-        createBubbleChart(yearIndex)
+        createBubbleChart(yearIndex) //call all update functions
         updatePictograph(yearIndex, currentCountry)
         updateNukeLabel(yearIndex, currentCountry)
         updateDescription(yearIndex)
@@ -60,13 +58,13 @@ var svg1 = d3.select('#bubblechart').append("svg")
     width = svg1.attr("width") - margin.left - margin.right,
     height = svg1.attr("height") - margin.top - margin.bottom
 
-svg1.on("wheel", function(event, d) {
+svg1.on("wheel", function(event, d) { //allow bubble chart to have scroll interactivity
     event.preventDefault()
     var year = currentYear
     var direction = event.wheelDelta < 0 ? 'down' : 'up';
     if(direction === 'down' && currentYear > 1945) { 
         year--
-        sliderTime.value([new Date(year, 10, 3)]);
+        sliderTime.value([new Date(year, 10, 3)]); //setting timeline value
     } else if(direction === 'up' && currentYear < 2020) {
         year++
         sliderTime.value([new Date(year, 10, 3)]);
@@ -75,11 +73,11 @@ svg1.on("wheel", function(event, d) {
 
 svg1.style("overscroll-behavior-y", "contain")
 
-function createBubbleChart(i) {
+function createBubbleChart(i) { //function to create and update bubble chart
     d3.csv('warheads.csv', function(d) {
         return d;
     }).then(function(data) { 
-        svg1.selectAll(".node").remove();
+        svg1.selectAll(".node").remove(); //remove all nodes if they exist
 
         data = data.filter(function(d) { 
             return d.Year == i
@@ -101,8 +99,8 @@ function createBubbleChart(i) {
     
         const circle = node.append('circle')
             .on("click", function(event, d) {
-                currentCountry = d.data.Country;
-                updatePictograph(index, currentCountry)
+                currentCountry = d.data.Country; //functions to handle events on bubble chart
+                updatePictograph(index, currentCountry) //updates other charts
                 updateNukeLabel(index, currentCountry)
                 createBubbleChart(currentYear)
             })
@@ -153,7 +151,7 @@ function createBubbleChart(i) {
     })
 }
 
-function createPictograph(i, c) {
+function createPictograph(i, c) { //initial pictograph creation
     d3.csv('warheads.csv', function(d) {
         return d;
     }).then(function(data) { 
@@ -224,7 +222,8 @@ function createPictograph(i, c) {
     })
 }
 
-function updatePictograph(i, c) {
+function updatePictograph(i, c) { //function to update pictograph, we need seperate because of animation
+    //we don't want to redraw all symbols every time, just add new ones
     d3.csv('warheads.csv', function(d) {
         return d;
     }).then(function(data) { 
@@ -262,14 +261,14 @@ function updatePictograph(i, c) {
     })
 }
 
-function updateNukeLabel(i, c){
+function updateNukeLabel(i, c){ //Info next to bubble chart
     d3.csv('warheads.csv', function(d) {
         return d;
     }).then(function(data) { 
         data = data.filter(function(d) { 
             return d.Year == i && d.Country === c
         })
-
+        //this needs to be different from other scale because we want the full country name for description
         countryScale = d3.scaleOrdinal().domain(countries).range(["United States", "Russia","United Kingdom", "France", "China", "Israel", "India", "Pakistan", "North Korea"])
 
         let desc = "That's equivalent to about " + (+data[0].Number * 30).toLocaleString() + " kilotons of TNT, enough to destroy San Francisco ~" + Math.round(((+data[0].Number * 30 * 1.5) / 121)).toLocaleString() + " times!"
@@ -289,7 +288,7 @@ function updateNukeLabel(i, c){
     })
 }
 
-function updateDescription(i) { 
+function updateDescription(i) { //Info for description under timeline
     d3.csv('warheads2.csv', function(d) {
         return d;
     }).then(function(data) { 
@@ -297,7 +296,7 @@ function updateDescription(i) {
             return d.Date == i
         })
 
-        function hexToRGB(hex, alpha) {
+        function hexToRGB(hex, alpha) { //hex to rgb function for counters css
             var r = parseInt(hex.slice(1, 3), 16),
                 g = parseInt(hex.slice(3, 5), 16),
                 b = parseInt(hex.slice(5, 7), 16);
@@ -311,8 +310,7 @@ function updateDescription(i) {
 
         const countries = ["US", "RS", "CN", "FR", "UK", "PK", "IS", "IN" , "NK"]
         countryScale = d3.scaleOrdinal().domain(countries).range(["USA", "Russia", "China", "France", "UK", "Pakistan", "Israel", "India", "North Korea"])
-        //console.log(countries)
-        for(let i = 0; i < countries.length; i++) { 
+        for(let i = 0; i < countries.length; i++) { //setting each counter's color and info
             const divID = countries[i] + "Counter"
             const accessor = countryScale(countries[i])
             document.getElementById(divID).innerHTML = data[0][accessor]
@@ -324,7 +322,7 @@ function updateDescription(i) {
     })
 }
 
-createPictograph(1945, currentCountry)
+createPictograph(1945, currentCountry) //set up screen for initial load
 updateNukeLabel(1945, currentCountry)
 updateDescription(1945)
 createBubbleChart(1945);
